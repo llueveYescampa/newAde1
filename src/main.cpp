@@ -37,12 +37,15 @@ int main(int argc, char *argv[])
     ofstream outfile;
     // end of Input and output streams
 
-    if (argc > 1 ) {
+    if (argc == 1 ) {
+      cout << "Use: " << argv[0] << " inputFile [outputFile]" << endl;
+      exit(0);
+    } else if (argc > 1 ) {
       infile.open(argv[1], ios::in);
       std2file(cin,infile);
       if (argc >= 3) {
-	outfile.open(argv[2], ios::out);
-	std2file(cout,outfile);
+        outfile.open(argv[2], ios::out);
+        std2file(cout,outfile);
       } // endif //
     } // endif //
     //    cin.clear();
