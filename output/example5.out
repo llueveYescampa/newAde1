@@ -1,0 +1,115 @@
+
+                                                                         Pagina  1
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ 2D Frame Problem: Example 14.3 and 14.5 in West & Geschwindner book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+N=  3         JO=  2          M=  2       NCAS=  2       NMAT=  1       NHIP=  0      NHIPR=  0
+
+Propiedades de los tipos de materiales.
+Tipo        E             G             Ct            Peso
+1       30000         11538        6.5e-06      0.00028357
+
+Datos de las Juntas.
+Junta  Rdx  Rdy  Rdz  Rrx  Rry  Rrz         X         Y         Z         Kdx        Kdy        Kdz        Krx        Kry        Krz
+    1    1    1    1    1    1    1     0.000     0.000     0.000           0          0          0          0          0          0
+    2    0    0    1    1    1    0     0.000   360.000     0.000           0          0          0          0          0          0
+    3    1    1    1    1    1    0   600.000   360.000     0.000           0          0          0          0          0          0
+
+Datos de los miembros.
+Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M     b      h
+   1   1   2 360.00  2.000E+01  0.000E+00  0.000E+00  1.820E+03   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+   2   2   3 600.00  2.000E+01  0.000E+00  0.000E+00  1.820E+03   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+
+Volumen = 19200.000                        Peso = 5.445                        Mean BandWidth: 7.500
+
+
+                                                                         Pagina  2
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ 2D Frame Problem: Example 14.3 and 14.5 in West & Geschwindner book ++++++++   Date: 08-05-2009  Time: 10:45:17
+First Load Case: Example 14.3
+
+NJC =    1  NMA =    0  NMC =    0  ATO =  0.000
+
+CARGAS APLICADAS EN LAS JUNTAS
+Junta         Fx         Fy         Fz         Mx         My         Mz
+    2    100.000      0.000      0.000      0.000      0.000   6000.000
+
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    8.219900E-02   -1.797021E-03    0.000000E+00    0.000000E+00    0.000000E+00    6.585491E-03
+    3    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00   -3.288253E-03
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000     -2.995     17.801      0.000     -0.000      0.000  -2205.380
+               90.000     -2.995     17.801      0.000      0.000      0.000   -603.290
+              180.000     -2.995     17.801      0.000      0.000      0.000    998.799
+              270.000     -2.995     17.801      0.000      0.000      0.000   2600.889
+            2 360.000     -2.995     17.801     -0.000      0.000     -0.000   4202.979
+      2     2   0.000    -82.199      2.995      0.000     -0.000      0.000  -1797.021
+              150.000    -82.199      2.995      0.000      0.000      0.000  -1347.766
+              300.000    -82.199      2.995      0.000      0.000      0.000   -898.511
+              450.000    -82.199      2.995      0.000      0.000      0.000   -449.255
+            3 600.000    -82.199      2.995     -0.000      0.000     -0.000     -0.000
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1    -17.8010      2.9950      0.0000      0.0000      0.0000   2205.3797
+    2    100.0000     -0.0000      0.0000      0.0000      0.0000   6000.0000
+    3    -82.1990     -2.9950      0.0000      0.0000      0.0000     -0.0000
+
+                                                                         Pagina  3
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ 2D Frame Problem: Example 14.3 and 14.5 in West & Geschwindner book ++++++++   Date: 08-05-2009  Time: 10:45:17
+Second Load Case: Example 14.5
+
+NJC =    0  NMA =    0  NMC =    1  ATO =  0.000
+
+CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyx).
+
+Miembro     1        ATO1 =   30.000 DTY=  -40.000 DTZ=    0.000
+
+FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS
+Miembro  Junta             N           Vy           Vz            T           My           Mz
+      1      1      -117.000        0.000        0.000       -0.000        0.000      598.735
+             2      -117.000       -0.000       -0.000        0.000       -0.000      598.735
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    1.800297E-03    7.036515E-02    0.000000E+00    0.000000E+00    0.000000E+00   -7.222072E-04
+    3    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    1.851907E-04
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000      0.275     -1.800      0.000     -0.000      0.000    813.254
+               90.000      0.275     -1.800      0.000      0.000      0.000    651.227
+              180.000      0.275     -1.800      0.000      0.000      0.000    489.200
+              270.000      0.275     -1.800      0.000      0.000      0.000    327.173
+            2 360.000      0.275     -1.800     -0.000      0.000     -0.000    165.146
+      2     2   0.000     -1.800     -0.275      0.000     -0.000      0.000    165.146
+              150.000     -1.800     -0.275      0.000      0.000      0.000    123.860
+              300.000     -1.800     -0.275      0.000      0.000      0.000     82.573
+              450.000     -1.800     -0.275      0.000      0.000      0.000     41.287
+            3 600.000     -1.800     -0.275     -0.000      0.000     -0.000     -0.000
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1      1.8003     -0.2752      0.0000      0.0000      0.0000   -813.2535
+    2      0.0000      0.0000      0.0000      0.0000      0.0000     -0.0000
+    3     -1.8003      0.2752      0.0000      0.0000      0.0000     -0.0000
+Time running 0.00  sec. 

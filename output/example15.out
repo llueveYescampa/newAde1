@@ -1,0 +1,171 @@
+
+                                                                         Pagina  1
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+N=  3         JO=  3          M=  2       NCAS=  2       NMAT=  1       NHIP=  1      NHIPR=  1
+
+Propiedades de los tipos de materiales.
+Tipo        E             G             Ct            Peso
+1       2e+08    7.6923e+07              1               1
+
+Datos de las Juntas.
+Junta  Rdx  Rdy  Rdz  Rrx  Rry  Rrz         X         Y         Z         Kdx        Kdy        Kdz        Krx        Kry        Krz
+    1    1    1    1    1    1    1     0.000     0.000     0.000           0          0          0          0          0          0
+    2    0    1    1    1    1    0     6.000     0.000     0.000           0          0          0          0          0          0
+    3    1    0    1    1    1    1    11.000     0.000     0.000           0          0          0          0          0          0
+
+Datos de los miembros.
+Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M     b      h
+   1   1   2   6.00  0.000E+00  0.000E+00  0.000E+00  3.600E-03   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+   2   2   3   5.00  0.000E+00  0.000E+00  0.000E+00  3.600E-03   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+
+Volumen =  0.000                        Peso = 0.000                        Mean BandWidth: 7.500
+
+
+                                                                         Pagina  2
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+1st Load Case
+
+NJC =    1  NMA =    0  NMC =    1  ATO =  0.000
+
+CARGAS APLICADAS EN LAS JUNTAS
+Junta         Fx         Fy         Fz         Mx         My         Mz
+    2      0.000    -50.000      0.000      0.000      0.000    150.000
+
+CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyx).
+
+Miembro     1        ATO1 =    0.000 DTY=    0.000 DTZ=    0.000
+Npc = 1  Px =    0.000 Py = -300.000 Pz =    0.000 A  =    2.000
+Npc = 2  Px =    0.000 Py = -300.000 Pz =    0.000 A  =    4.000
+
+FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS
+Miembro  Junta             N           Vy           Vz            T           My           Mz
+      1      1        -0.000      300.000        0.000       -0.000        0.000     -400.000
+             2         0.000     -300.000       -0.000        0.000       -0.000     -400.000
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    8.814103E-04
+    3    0.000000E+00    2.203526E-03    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000     -0.000    405.769      0.000     -0.000      0.000   -611.538
+            2   6.000      0.000   -194.231     -0.000      0.000     -0.000     23.077
+      2     2   0.000     -0.000     -0.000      0.000     -0.000      0.000   -126.923
+            3   5.000      0.000     -0.000     -0.000      0.000     -0.000   -126.923
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1      0.0000    405.7692      0.0000      0.0000      0.0000    611.5385
+    2      0.0000    244.2308      0.0000      0.0000      0.0000    150.0000
+    3      0.0000      0.0000      0.0000      0.0000      0.0000   -126.9231
+
+                                                                         Pagina  3
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+2nd Load Case
+
+NJC =    0  NMA =    0  NMC =    1  ATO =  0.000
+
+CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyx).
+
+Miembro     2        ATO1 =    0.000 DTY=    0.000 DTZ=    0.000
+Npu = 1  Wx =    0.000 Wy =  -30.000 Wz =    0.000 A  =    0.000 B  =    5.000
+
+FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS
+Miembro  Junta             N           Vy           Vz            T           My           Mz
+      2      2        -0.000       75.000        0.000       -0.000        0.000      -62.500
+             3         0.000      -75.000       -0.000        0.000       -0.000      -62.500
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00   -4.006410E-04
+    3    0.000000E+00   -2.086672E-03    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000     -0.000    -48.077      0.000     -0.000      0.000     96.154
+            2   6.000      0.000    -48.077     -0.000      0.000     -0.000   -192.308
+      2     2   0.000     -0.000    150.000      0.000     -0.000      0.000   -192.308
+            3   5.000      0.000      0.000     -0.000      0.000     -0.000    182.692
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1      0.0000    -48.0769      0.0000      0.0000      0.0000    -96.1538
+    2      0.0000    198.0769      0.0000      0.0000      0.0000      0.0000
+    3      0.0000     -0.0000      0.0000      0.0000      0.0000    182.6923
+
+                                                                         Pagina  4
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+Combination of loads
+Hipotesis  Caso de Carga  Factor
+    1            1        1.0000
+                 2        1.0000
+
+
+                                                                         Pagina  5
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS PARA LAS HIPOTESIS DE SOLICITACIONES
+Miembro       x        Hip          N           Vy          Vz           T          My          Mz
+      1   0.000          1       0.000     357.692       0.000       0.000       0.000    -515.385
+          6.000          1       0.000    -242.308       0.000       0.000       0.000    -169.231
+      2   0.000          1       0.000     150.000       0.000       0.000       0.000    -319.231
+          5.000          1       0.000      -0.000       0.000       0.000       0.000      55.769
+
+                                                                         Pagina  6
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+Usando las mismas combinaciones de los miembros
+Hipotesis  Caso de Carga  Factor
+    1            1         1.000
+                 2         1.000
+
+
+                                                                         Pagina  7
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Continius Beam, Example 2, Chapter 5 of Truss Weaver & Gere book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+REACCIONES EN LAS JUNTAS PARA LAS HIPOTESIS DE SOLICITACIONES
+Junta   Hip          Fx          Fy          Fz          Mx          My          Mz
+    1     1       0.000     357.692       0.000       0.000       0.000     515.385
+    2     1       0.000     442.308       0.000       0.000       0.000     150.000
+    3     1       0.000       0.000       0.000       0.000       0.000      55.769
+Time running 0.00  sec. 

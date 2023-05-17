@@ -1,0 +1,79 @@
+
+                                                                         Pagina  1
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Grid Problem: Example 5.8 in McGuire,Gallagher and Ziemian book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+N=  3         JO=  2          M=  2       NCAS=  1       NMAT=  1       NHIP=  0      NHIPR=  0
+
+Propiedades de los tipos de materiales.
+Tipo        E             G             Ct            Peso
+1       2e+08    7.6923e+07          1e-05           76990
+
+Datos de las Juntas.
+Junta  Rdx  Rdy  Rdz  Rrx  Rry  Rrz         X         Y         Z         Kdx        Kdy        Kdz        Krx        Kry        Krz
+    1    1    1    1    1    1    1     0.000     0.000     0.000           0          0          0          0          0          0
+    2    1    1    0    0    0    1     5.000     0.000     0.000           0          0          0          0          0          0
+    3    1    1    1    1    1    1     5.000     8.000     0.000           0          0          0          0          0          0
+
+Datos de los miembros.
+Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M     b      h
+   1   1   2   5.00  4.000E-03  1.000E-07  5.000E-05  0.000E+00   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+   2   2   3   8.00  6.000E-03  3.000E-07  2.000E-04  0.000E+00   4.00   4.00   2.00  4.00   4.00   2.00   1.00    1
+
+Volumen =  0.068                        Peso =5235.320                        Mean BandWidth: 7.500
+
+
+                                                                         Pagina  2
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Grid Problem: Example 5.8 in McGuire,Gallagher and Ziemian book ++++++++   Date: 08-05-2009  Time: 10:45:17
+First Load Case
+
+NJC =    1  NMA =    0  NMC =    1  ATO =  0.000
+
+CARGAS APLICADAS EN LAS JUNTAS
+Junta         Fx         Fy         Fz         Mx         My         Mz
+    2      0.000      0.000     -5.000      0.000      0.000      0.000
+
+CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyx).
+
+Miembro     1        ATO1 =    0.000 DTY=    0.000 DTZ=    0.000
+Npu = 1  Wx =    0.000 Wy =    0.000 Wz =   -3.000 A  =    0.000 B  =    5.000
+
+FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS
+Miembro  Junta             N           Vy           Vz            T           My           Mz
+      1      1        -0.000        0.000        7.500       -0.000       -6.250       -0.000
+             2         0.000       -0.000       -7.500        0.000       -6.250        0.000
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    0.000000E+00    0.000000E+00   -2.238452E-02    4.196774E-03    5.931967E-03    0.000000E+00
+    3    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000     -0.000      0.000     14.752      0.006    -36.245     -0.000
+                1.250      0.000      0.000     11.002      0.006    -20.148      0.000
+                2.500      0.000      0.000      7.252      0.006     -8.739      0.000
+                3.750      0.000      0.000      3.502      0.006     -2.017      0.000
+            2   5.000      0.000     -0.000     -0.248      0.006      0.017      0.000
+      2     2   0.000     -0.000      0.000     -5.248     -0.017      0.006     -0.000
+                2.000      0.000      0.000     -5.248     -0.017    -10.489      0.000
+                4.000      0.000      0.000     -5.248     -0.017    -20.984      0.000
+                6.000      0.000      0.000     -5.248     -0.017    -31.479      0.000
+            3   8.000      0.000     -0.000     -5.248     -0.017    -41.974      0.000
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1      0.0000      0.0000     14.7524     -0.0065    -36.2450      0.0000
+    2      0.0000      0.0000     -5.0000     -0.0000     -0.0000      0.0000
+    3      0.0000      0.0000      5.2476    -41.9742     -0.0171      0.0000
+Time running 0.00  sec. 

@@ -1,0 +1,76 @@
+
+                                                                         Pagina  1
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Space Truss Problem: Example  5.4 in McGuire,Gallagher and Ziemian book ++++++++   Date: 08-05-2009  Time: 10:45:17
+
+N=  5         JO=  4          M=  4       NCAS=  1       NMAT=  1       NHIP=  0      NHIPR=  0
+
+Propiedades de los tipos de materiales.
+Tipo        E             G             Ct            Peso
+1       2e+08     7.692e+07          1e-05           76990
+
+Datos de las Juntas.
+Junta  Rdx  Rdy  Rdz  Rrx  Rry  Rrz         X         Y         Z         Kdx        Kdy        Kdz        Krx        Kry        Krz
+    1    1    1    1    0    0    0     0.000     0.000     0.000           0          0          0          0          0          0
+    2    1    1    1    0    0    0     8.000     0.000     0.000           0          0          0          0          0          0
+    3    1    1    1    0    0    0     0.000     6.000     0.000           0          0          0          0          0          0
+    4    1    1    1    0    0    0     8.000     6.000     0.000           0          0          0          0          0          0
+    5    0    0    0    0    0    0     2.000     4.000     8.000           0          0          0          0          0          0
+
+Datos de los miembros.
+Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M     b      h
+   1  -1  -5   9.17  2.000E-02  0.000E+00  6.667E-07  1.667E-03   0.00   0.00   0.00  0.00   0.00   0.00   1.00    1    0.02   1.00
+   2  -2  -5  10.77  3.000E-02  0.000E+00  2.250E-06  2.500E-03   0.00   0.00   0.00  0.00   0.00   0.00   1.00    1    0.03   1.00
+   3  -3  -5   8.49  3.000E-02  0.000E+00  2.250E-06  2.500E-03   0.00   0.00   0.00  0.00   0.00   0.00   1.00    1    0.03   1.00
+   4  -4  -5  10.20  4.000E-02  0.000E+00  5.333E-06  3.333E-03   0.00   0.00   0.00  0.00   0.00   0.00   1.00    1    0.04   1.00
+
+Volumen =  1.169                        Peso =89993.064                        Mean BandWidth: 8.300
+
+
+                                                                         Pagina  2
+*************************************************************************
+* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *
+* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *
+* Programaci¢n: E.F.B.S.                                                *
+*************************************************************************
+++++++++ Space Truss Problem: Example  5.4 in McGuire,Gallagher and Ziemian book ++++++++   Date: 08-05-2009  Time: 10:45:17
+First Load Case
+
+NJC =    1  NMA =    0  NMC =    0  ATO =  0.000
+
+CARGAS APLICADAS EN LAS JUNTAS
+Junta         Fx         Fy         Fz         Mx         My         Mz
+    5    200.000    600.000   -800.000      0.000      0.000      0.000
+
+
+DESPLAZAMIENTO DE LAS JUNTAS.
+Junta              Dx              Dy              Dz              Rx              Ry              Rz
+    1    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    2    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    3    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    4    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00    0.000000E+00
+    5    1.778668E-04    2.721959E-03   -4.865212E-04    0.000000E+00    0.000000E+00    0.000000E+00
+
+FUERZAS EN LAS SECCIONES DE LOS MIEMBROS
+Miembro Junta       x          N         Vy         Vz          T         My         Mz
+      1     1   0.000    350.067      0.000      0.000     -0.000      0.000     -0.000
+            5   9.165    350.067     -0.000     -0.000      0.000     -0.000      0.000
+      2     2   0.000    306.645      0.000      0.000     -0.000      0.000     -0.000
+            5  10.770    306.645     -0.000     -0.000      0.000     -0.000      0.000
+      3     3   0.000   -748.363      0.000      0.000     -0.000      0.000     -0.000
+            5   8.485   -748.363     -0.000     -0.000      0.000     -0.000      0.000
+      4     4   0.000   -800.253      0.000      0.000     -0.000      0.000     -0.000
+            5  10.198   -800.253     -0.000     -0.000      0.000     -0.000      0.000
+
+CARGAS Y/O REACCIONES EN LAS JUNTAS
+Junta          FX          FY          FZ          MX          MY          MZ
+    1    -76.3908   -152.7816   -305.5633      0.0000      0.0000      0.0000
+    2    170.8275   -113.8850   -227.7701      0.0000      0.0000      0.0000
+    3    176.3908   -176.3908    705.5633      0.0000      0.0000      0.0000
+    4   -470.8275   -156.9425    627.7701      0.0000      0.0000      0.0000
+    5    200.0000    600.0000   -800.0000      0.0000      0.0000      0.0000
+Time running 0.00  sec. 
