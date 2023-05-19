@@ -67,13 +67,13 @@ void ade1b() {
          << setw(5) << constraint[jointRecNber][5] << setprecision(3)
          << setw(10) << jointRecord.x
          << setw(10) << jointRecord.y
-         << setw(10) << jointRecord.z << setprecision(0)
+         << setw(10) << jointRecord.z << setprecision(4) << scientific // << setprecision(0)
          << setw(12) << jointRecord.springsConstants[0]
          << setw(11) << jointRecord.springsConstants[1]
          << setw(11) << jointRecord.springsConstants[2]
          << setw(11) << jointRecord.springsConstants[3]
          << setw(11) << jointRecord.springsConstants[4]
-         << setw(11) << jointRecord.springsConstants[5] << '\n';
+         << setw(11) << jointRecord.springsConstants[5] << fixed << '\n';
          ++lin;
   } // end for //
   cout << '\n';
