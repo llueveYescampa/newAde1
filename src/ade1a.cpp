@@ -21,7 +21,6 @@ using std::setprecision;
 #include "joint.h"
 #include "element.h"
 
-const real PI=static_cast<real>(3.14159265358979323846264338327);
 inline real sqrval(real s) {return (s) * (s);}
 inline real cube(real s) {return (s)*(s)*(s);}
 
@@ -208,7 +207,7 @@ void ade1a() {
         if (elementRecord.ax == 0) { // Seccion circular
           elementRecord.by = elementRecord.ar;
           real d = 0.5 * elementRecord.bz;
- 	  elementRecord.ar = PI * sqrval(d);
+ 	  elementRecord.ar = M_PI * sqrval(d);
 	  elementRecord.ax = 0.5 * elementRecord.ar * sqrval(d);
 	  elementRecord.ay = elementRecord.az = 0.5 * elementRecord.ax;
 	  fy = elementRecord.ay * 10 / (elementRecord.ar * 9);
