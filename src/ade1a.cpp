@@ -205,31 +205,31 @@ void ade1a() {
       } else {
         elementRecord.bz = elementRecord.ar;
         if (elementRecord.ax == 0) { // Seccion circular
-          elementRecord.by = elementRecord.ar;
-          real d = 0.5 * elementRecord.bz;
- 	  elementRecord.ar = M_PI * sqrval(d);
-	  elementRecord.ax = 0.5 * elementRecord.ar * sqrval(d);
-	  elementRecord.ay = elementRecord.az = 0.5 * elementRecord.ax;
-	  fy = elementRecord.ay * 10 / (elementRecord.ar * 9);
-	  fz = elementRecord.az * 10 / (elementRecord.ar * 9);
+            elementRecord.by = elementRecord.ar;
+            real d = 0.5 * elementRecord.bz;
+            elementRecord.ar = M_PI * sqrval(d);
+            elementRecord.ax = 0.5 * elementRecord.ar * sqrval(d);
+            elementRecord.ay = elementRecord.az = 0.5 * elementRecord.ax;
+            fy = elementRecord.ay * 10 / (elementRecord.ar * 9);
+            fz = elementRecord.az * 10 / (elementRecord.ar * 9);
         } else { // Seccion rectangular
-          elementRecord.by = elementRecord.ax;
-	  elementRecord.ar *=  elementRecord.ax;
-	  elementRecord.ax = elementRecord.ar / 12;
-	  elementRecord.ay = elementRecord.ax * sqrval(elementRecord.bz);
-	  elementRecord.az = elementRecord.ax * sqrval(elementRecord.by);
-	  real c,d;
-	  if (elementRecord.bz < elementRecord.by) {
-	    c = elementRecord.bz;
-	    d = elementRecord.by;
-	  } else {
-	    c = elementRecord.by;
-	    d = elementRecord.bz;
-	  } // end if //
-	  real f = c / d;
-	  elementRecord.ax = cube(c) * d * (1 - .63 * f + .0525 * sqrval(f)*sqrval(f)*f) / 3;
-	  fy = elementRecord.ay * 1.2 / elementRecord.ar;
-	  fz = elementRecord.az * 1.2 / elementRecord.ar;
+            elementRecord.by = elementRecord.ax;
+            elementRecord.ar *=  elementRecord.ax;
+            elementRecord.ax = elementRecord.ar / 12;
+            elementRecord.ay = elementRecord.ax * sqrval(elementRecord.bz);
+            elementRecord.az = elementRecord.ax * sqrval(elementRecord.by);
+            real c,d;
+            if (elementRecord.bz < elementRecord.by) {
+                c = elementRecord.bz;
+                d = elementRecord.by;
+            } else {
+                c = elementRecord.by;
+                d = elementRecord.bz;
+            } // end if //
+            real f = c / d;
+            elementRecord.ax = cube(c) * d * (1 - .63 * f + .0525 * sqrval(f)*sqrval(f)*f) / 3;
+            fy = elementRecord.ay * 1.2 / elementRecord.ar;
+            fz = elementRecord.az * 1.2 / elementRecord.ar;
         } // end if //
       } // end if //
       ara = elementRecord.ar;
