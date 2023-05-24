@@ -1,13 +1,26 @@
 #include<iostream>
 using std::cout;
 
+#include "common.h"
+#include "element.h"
+
 void printElementInfo(const size_t &val, size_t &lin) 
 {
 
    switch (val) {
      case 1:
        cout << "Datos de los miembros.\n" 
-            << "Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M     b      h\n";
+            << "Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M";
+            
+            
+        if(elementRecord.bz > 0 and elementRecord.by == 0) {
+            cout << "  Diam"; 
+        } else if(elementRecord.bz > 0 and elementRecord.by > 0) {    
+            cout << "     b      h";
+        } // end if//
+        
+        
+        cout << '\n';   
        lin += 2;
        break;  
      case 2:
@@ -36,4 +49,3 @@ void printElementInfo(const size_t &val, size_t &lin)
 //       break;
    } // end switch //
 } // end of elementHeader //
-

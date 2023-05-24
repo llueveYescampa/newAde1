@@ -202,10 +202,10 @@ void ade1a() {
         elementRecord.by = 0.0;
         fy = elementRecord.ay * 1.5 / elementRecord.ar;
         fz = elementRecord.az * 1.5 / elementRecord.ar;
-      } else {
+      } else { // elementRecord.ay + elementRecord.az == 0)
         elementRecord.bz = elementRecord.ar;
+        elementRecord.by = elementRecord.ax;
         if (elementRecord.ax == 0) { // Seccion circular
-            elementRecord.by = elementRecord.ar;
             real d = 0.5 * elementRecord.bz;
             elementRecord.ar = M_PI * sqrval(d);
             elementRecord.ax = 0.5 * elementRecord.ar * sqrval(d);

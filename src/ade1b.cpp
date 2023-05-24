@@ -125,11 +125,24 @@ void ade1b() {
          << setw(7) << elementRecord.stiffnessData[2]
          << setw(7) << elementRecord.stiffnessData[3]
          << setw(5) << elementRecord.materialType;
+         
+         
     if(elementRecord.bz > 0) {
-    cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n'; 
+        cout << setw(8) << elementRecord.bz; 
+    } // end if//
+    if(elementRecord.by > 0) {
+        cout << setw(7) << elementRecord.by;
+    } // end if//
+    cout << '\n';   
+    
+/*        
+    if(elementRecord.bz > 0) {
+        cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n'; 
     } else {
        cout << '\n';   
     } // end if //         
+*/    
+    
     ++lin;
   } // end for //
   real meanBW=0.0;
