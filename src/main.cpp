@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     start = clock();
 
     cin >> n >> jo >>  mm >> ncas >> nmat >> nhip >> nhipr >> itipo >> reviewData;
-    if (nmat < 0) { // consider chear deff. if the number o materials is negative
+    if (nmat < 0) { // consider shear deff. if the number o materials is negative
       nmat = -nmat;
       considerShearDef=true;
     } // end if //
