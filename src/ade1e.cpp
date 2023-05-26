@@ -15,26 +15,6 @@ using std::setprecision;
 #include "joint.h"
 #include "element.h"
 
-/* not needed. Equal to wk1
- void pk1 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
- {
- real px = wx;
- real py = wy;
- //real pz = wz;
- real zji = zj - zi;
- real xji = xj - xi;
- real all = sqrt((zji * zji + xji * xji));
- real coseno = all / al;
- real seno = (yj - yi) / al;
- wy = py * coseno;
- wx = py * seno;
- coseno = xji / all;
- seno = zji / all;
- wx = wx + px * coseno + pz * seno;
- wz = pz * coseno - px * seno;
- } // end pk1();
-
- */
 void wk1 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
   {
     real wx1 = wx;
