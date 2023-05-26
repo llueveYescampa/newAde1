@@ -354,21 +354,15 @@ void ade1e() {
 	} // end if //
 
 	if ( k > 0) {
-	  jointRecNber= elementRecord.ji-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xi = jointRecord.x;
-	  real yi = jointRecord.y;
-	  real zi = jointRecord.z;
-
-	  jointRecNber= elementRecord.jj-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xj = jointRecord.x;
-	  real yj = jointRecord.y;
-	  real zj = jointRecord.z;
-	  wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+        real Px1,Py1,Pz1;
+        Px1 = Px;
+        Py1 = Py;
+        Pz1 = Pz;
+        Px = elementRecord.r[0] * Px1 + elementRecord.r[1] * Py1 +  elementRecord.r[2] * Pz1;
+        Py = elementRecord.r[3] * Px1 + elementRecord.r[4] * Py1 +  elementRecord.r[5] * Pz1;
+        Pz = elementRecord.r[6] * Px1 + elementRecord.r[7] * Py1 +  elementRecord.r[8] * Pz1;
 	} // end if //
+
 
 	cout << "Npc = " << setw(1) << ll
 	  << "  Px =" << setw(9) << setprecision(3) << Px
