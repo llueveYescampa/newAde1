@@ -8,47 +8,14 @@ using std::ios;
 using std::setw;
 using std::setprecision;
 
+#define square(x) ((x)*(x))
+
 #include <cmath>
 
 #include "common.h"
 #include "prototyp.h"
 #include "joint.h"
 #include "element.h"
-
-void wk1 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
-{
-  real wx1 = wx;
-  real wy1 = wy;
-
-  real zji = zj - zi;
-  real xji = xj - xi;
-  real all = sqrt((zji * zji + xji * xji));
-  real coseno = all / al;
-  real seno = (yj - yi) / al;
-  wy = wy1 * coseno;
-  wx = wy1 * seno;
-  coseno = xji / all;
-  seno = zji / all;
-  wx += wx1 * coseno + wz * seno;
-  wz = wz * coseno - wx1 * seno;
-} // end wk1();
-
-
-void wk2 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
-{
-  real wx1 = wx;
-  real zji = zj - zi;
-  real xji = xj - xi;
-  real all = sqrt((zji * zji + xji * xji));
-  real coseno = all / al;
-  real seno = (yj - yi) / al;
-  wx = wy * seno / coseno;
-  coseno = xji / all;
-  seno = zji / all;
-  wx +=  ((wx1 * coseno / seno) + (wz * seno / coseno));
-  wz -= wx;
-
-} // end wk2();
 
 void ade1e() {
   //  Local Variables
@@ -226,27 +193,40 @@ void ade1e() {
         } else if (b == 0.0){
           b = elementRecord.length;
         } // end if //
+
+
         if ( k > 0) {
-          jointRecNber= elementRecord.ji-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xi = jointRecord.x;
-          real yi = jointRecord.y;
-          real zi = jointRecord.z;
+          real Wx1,Wy1,Wz1;
 
-          jointRecNber= elementRecord.jj-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xj = jointRecord.x;
-          real yj = jointRecord.y;
-          real zj = jointRecord.z;
+            if ( k == 1) {
+              Wx1 = Wx;
+              Wy1 = Wy;
+              Wz1 = Wz;
+            } else if ( k == 2) {
+              jointRecNber= elementRecord.ji-1;
+              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+              real xi = jointRecord.x;
+              real yi = jointRecord.y;
+              real zi = jointRecord.z;
 
-          if (k == 1) {
-            wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-          } else if (k == 2){
-            wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-          } // end if //
+              jointRecNber= elementRecord.jj-1;
+              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+              real xj = jointRecord.x;
+              real yj = jointRecord.y;
+              real zj = jointRecord.z;
+
+              Wx1 = Wx * sqrt( square(yj-yi) + square(zj-zi)) / elementRecord.length;
+              Wy1 = Wy * sqrt( square(xj-xi) + square(zj-zi)) / elementRecord.length;
+              Wz1 = Wz * sqrt( square(xj-xi) + square(yj-yi)) / elementRecord.length;
+            } // end if //
+
+          Wx = elementRecord.r[0] * Wx1 + elementRecord.r[1] * Wy1 +  elementRecord.r[2] * Wz1;
+          Wy = elementRecord.r[3] * Wx1 + elementRecord.r[4] * Wy1 +  elementRecord.r[5] * Wz1;
+          Wz = elementRecord.r[6] * Wx1 + elementRecord.r[7] * Wy1 +  elementRecord.r[8] * Wz1;
         } // end if //
+
         cout << "Npu = "  << setw(1) << ll
              << "  Wx ="  << setw(9) << setprecision(3) << Wx
              << " Wy ="  << setw(9)                    << Wy
@@ -429,28 +409,59 @@ void ade1e() {
           b = elementRecord.length;
         } // end if //
 
-        if ( k > 0) {
-          jointRecNber= elementRecord.ji-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xi = jointRecord.x;
-          real yi = jointRecord.y;
-          real zi = jointRecord.z;
 
-          jointRecNber= elementRecord.jj-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xj = jointRecord.x;
-          real yj = jointRecord.y;
-          real zj = jointRecord.z;
-          if (k == 1) {
-            wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-            wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-          } else if (k == 2){
-            wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-            wk2(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-          } // end if //
+        if ( k > 0) {
+          real Wxi,Wyi,Wzi;
+          real Wxj,Wyj,Wzj;
+
+            if ( k == 1) {
+              Wxi = Wx;
+              Wyi = Wy;
+              Wzi = Wz;
+
+              Wxj = Px;
+              Wyj = Py;
+              Wzj = Pz;
+            } else if ( k == 2) {
+              jointRecNber= elementRecord.ji-1;
+              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+              real xi = jointRecord.x;
+              real yi = jointRecord.y;
+              real zi = jointRecord.z;
+
+              jointRecNber= elementRecord.jj-1;
+              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+              real xj = jointRecord.x;
+              real yj = jointRecord.y;
+              real zj = jointRecord.z;
+
+              real temp = sqrt( square(yj-yi) + square(zj-zi));
+              Wxi = Wx * temp / elementRecord.length;
+              Wxj = Px * temp / elementRecord.length;
+
+              temp = sqrt( square(xj-xi) + square(zj-zi));
+              Wyi = Wy * temp / elementRecord.length;
+              Wyj = Py * temp / elementRecord.length;
+
+              temp = sqrt( square(xj-xi) + square(yj-yi));
+              Wzi = Wz * temp / elementRecord.length;
+              Wzj = Pz * temp / elementRecord.length;
+
+            } // end if //
+
+          Wx = elementRecord.r[0] * Wxi + elementRecord.r[1] * Wyi +  elementRecord.r[2] * Wzi;
+          Wy = elementRecord.r[3] * Wxi + elementRecord.r[4] * Wyi +  elementRecord.r[5] * Wzi;
+          Wz = elementRecord.r[6] * Wxi + elementRecord.r[7] * Wyi +  elementRecord.r[8] * Wzi;
+
+
+          Px = elementRecord.r[0] * Wxj + elementRecord.r[1] * Wyj +  elementRecord.r[2] * Wzj;
+          Py = elementRecord.r[3] * Wxj + elementRecord.r[4] * Wyj +  elementRecord.r[5] * Wzj;
+          Pz = elementRecord.r[6] * Wxj + elementRecord.r[7] * Wyj +  elementRecord.r[8] * Wzj;
+
         } // end if //
+
 
         cout << "Npv = "  << setw(1) << ll
              << "  Wxi=" << setw(9) << setprecision(3) << Wx
@@ -552,22 +563,18 @@ void ade1e() {
         if (a < 0) {
           a = -(a*elementRecord.length);
         } // end if //
-        if ( k > 0) {
-          jointRecNber= elementRecord.ji-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xi = jointRecord.x;
-          real yi = jointRecord.y;
-          real zi = jointRecord.z;
 
-          jointRecNber= elementRecord.jj-1;
-          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-          real xj = jointRecord.x;
-          real yj = jointRecord.y;
-          real zj = jointRecord.z;
-          wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+
+        if ( k > 0) {
+          real Px1,Py1,Pz1;
+          Px1 = Px;
+          Py1 = Py;
+          Pz1 = Pz;
+          Px = elementRecord.r[0] * Px1 + elementRecord.r[1] * Py1 +  elementRecord.r[2] * Pz1;
+          Py = elementRecord.r[3] * Px1 + elementRecord.r[4] * Py1 +  elementRecord.r[5] * Pz1;
+          Pz = elementRecord.r[6] * Px1 + elementRecord.r[7] * Py1 +  elementRecord.r[8] * Pz1;
         } // end if //
+
 
         cout << "Npar= " << setw(1) << ll
              << "  Mx =" << setw(9) << setprecision(3) << Px
