@@ -27,13 +27,13 @@ void ade1d() {
 
 
   // opening files for processing data
-  elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out|ios::binary);  
+  elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out|ios::binary);
   if (!elementsForcesBinaryFile) {
-     elementsForcesBinaryFile.open(fileName[2].c_str(), ios::out|ios::binary);
-     if (!elementsForcesBinaryFile) {
+    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::out|ios::binary);
+    if (!elementsForcesBinaryFile) {
       cerr << "File " << fileName[2] << " could not be opened.\n";
       exit(1);
-     } // end if //
+    } // end if //
   } // end if //
 
 
@@ -58,7 +58,7 @@ void ade1d() {
   } // end if //
 
   header(cout);
-  cin.ignore(1000,'\n'); 
+  cin.ignore(1000,'\n');
   getline(cin,titleCase[icas]);
   cout << titleCase[icas] << "\n\n";
   lin+=2;
@@ -67,15 +67,15 @@ void ade1d() {
   cin >> njc >> nma >> nmc >> ato;
 
   cout << fixed <<"NJC = " << setw(4) << njc << setw(8)
-    << "NMA = " << setw(4) << nma << setw(8)
-    << "NMC = " << setw(4) << nmc << setw(8)
-    << "ATO = " << setw(6) << setprecision (3) << ato << "\n\n";
+       << "NMA = " << setw(4) << nma << setw(8)
+       << "NMC = " << setw(4) << nmc << setw(8)
+       << "ATO = " << setw(6) << setprecision (3) << ato << "\n\n";
   lin +=2;
   forcesInElement[0] = static_cast<real>(false); // redundant because was created as 0
 
   if (nhip == 0) {
     for (size_t i=0; i<m; ++i) {
-      elementForcesRecNber=i;   
+      elementForcesRecNber=i;
       elementsForcesBinaryFile.seekp(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
       elementsForcesBinaryFile.write(reinterpret_cast<const char *> (forcesInElement), sizeOfElementForcesRecord);
     } // end for //
@@ -89,45 +89,45 @@ void ade1d() {
 
   // Determinacion de la contribucion de las cargas aplicadas
   // en los nodos al vector de cargas loadVector[]
-  
+
   if (njc > 0) {
     printJointInfo(2,lin);
     for (size_t i=1; i<=njc; ++i) {
       if (lin > 56) {
-	header(cout);
+        header(cout);
         cout << titleCase[icas] << "\n\n";
-        lin+=2;	
-	printJointInfo(2,lin);
+        lin+=2;
+        printJointInfo(2,lin);
       } // end if //
-      
+
       size_t j;
       cin >> j;
       jointRecNber= j-1; // = static_cast<long>(w[1]) - 1;
       cout << setw(5) << j;
-      
+
       size_t k=(j-1)*dofPerJoint;
       for (size_t ii=1; ii<=dofPerJoint; ++ii) {
-	cin >> loadVector[++k];
-	cout << setw(11) << setprecision(3) << loadVector[k]; //w[ii];
-      } // end for //            
+        cin >> loadVector[++k];
+        cout << setw(11) << setprecision(3) << loadVector[k]; //w[ii];
+      } // end for //
       cout << '\n';
       ++lin;
       jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
       jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-      
-      
+
+
       if (jointRecord.areThereRestrictions) {
         k=(j-1)*dofPerJoint+1;
-	for (size_t i=0; i<dofPerJoint; ++i, ++k) {
-	  if (constraint[jointRecNber][i] or jointRecord.springsConstants[i] > 0.0 ) {
-	    jointRecord.load[i] = -loadVector[k];
-	    //} else {
-	    //   jointRecord.load[i] = 0.0;
-	  } // end if //
-	} // end for //
-        
-	jointsBinaryFile.seekp(sizeOfJointRecord*jointRecNber,ios::beg);
-	jointsBinaryFile.write(reinterpret_cast<const char *> (&jointRecord), sizeOfJointRecord);
+        for (size_t i=0; i<dofPerJoint; ++i, ++k) {
+          if (constraint[jointRecNber][i] or jointRecord.springsConstants[i] > 0.0 ) {
+            jointRecord.load[i] = -loadVector[k];
+            //} else {
+            //   jointRecord.load[i] = 0.0;
+          } // end if //
+        } // end for //
+
+        jointsBinaryFile.seekp(sizeOfJointRecord*jointRecNber,ios::beg);
+        jointsBinaryFile.write(reinterpret_cast<const char *> (&jointRecord), sizeOfJointRecord);
       } // end if //
     } // end for //
     cout << '\n';
@@ -139,44 +139,44 @@ void ade1d() {
   if (lin + nma + 2 > 56) {
     header(cout);
     cout << titleCase[icas] << "\n\n";
-    lin+=2;    
+    lin+=2;
   } // end if //
   if (nma > 0) {
     printJointInfo(3,lin);
     for (size_t i=1; i<=nma; ++i) {
       if (lin > 56) {
-	header(cout);
+        header(cout);
         cout << titleCase[icas] << "\n\n";
-        lin+=2;	
-	printJointInfo(3, lin);
+        lin+=2;
+        printJointInfo(3, lin);
       } // end if //
       size_t j; cin >> j;
       jointRecNber = j-1;
-      
+
       //cerr << j << "    " << w[2] << "   " << w[3] << "   " << w[4]<< "   " << w[5]<< "   " << w[6] << "   " << w[7] << '\n';
       jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
       jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-      
+
       if (jointRecord.areThereRestrictions == false) {
-	cerr << "ERROR. Movimiento de apoyo en junta no restringida.\n";
-	cerr << "Revise la junta : " << j << '\n';
-	cout << "ERROR. Movimiento de apoyo en junta no restringida.\n";
-	cout << "Revise la junta : " << j << '\n';
-	exit(0);
+        cerr << "ERROR. Movimiento de apoyo en junta no restringida.\n";
+        cerr << "Revise la junta : " << j << '\n';
+        cout << "ERROR. Movimiento de apoyo en junta no restringida.\n";
+        cout << "Revise la junta : " << j << '\n';
+        exit(0);
       } // end if //
-      
-      
+
+
       cout << setw(5) << j;
       for (size_t k=0; k<dofPerJoint; ++k) {
-	cin >> jointRecord.jointDispl[k];
-	cout << setw(11) << setprecision(7) <<jointRecord.jointDispl[k];
-	if ( !constraint[jointRecNber][k]  and jointRecord.jointDispl[k] != 0.0) {
-	  cerr << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
-	  cerr << "Revise la junta : " << j << '\n';
-	  cout << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
-	  cout << "Revise la junta : " << j << '\n';
-	  exit(0);
-	} // end if //
+        cin >> jointRecord.jointDispl[k];
+        cout << setw(11) << setprecision(7) <<jointRecord.jointDispl[k];
+        if ( !constraint[jointRecNber][k]  and jointRecord.jointDispl[k] != 0.0) {
+          cerr << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
+          cerr << "Revise la junta : " << j << '\n';
+          cout << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
+          cout << "Revise la junta : " << j << '\n';
+          exit(0);
+        } // end if //
       } // end for //
       jointsBinaryFile.seekp(sizeOfJointRecord*jointRecNber,ios::beg);
       jointsBinaryFile.write(reinterpret_cast<const char *> (&jointRecord), sizeOfJointRecord);
@@ -192,35 +192,35 @@ void ade1d() {
       jointRecNber = static_cast<long>(elementRecord.ji)-1 ;
       // Determinacion de desplazamientos en el miembro [i]
       for (size_t k=1,j=1; j<=2; ++j) {
-	jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	for (size_t i=0; i<dofPerJoint; ++i,++k) {
-	  d[k] = jointRecord.jointDispl[i];
-	  if (d[k] != 0.0) {
-	    mytest = true;
-	  } // end if //
-	} // end for //
-	jointRecNber = static_cast<long>(elementRecord.jj)-1 ;
+        jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+        jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+        for (size_t i=0; i<dofPerJoint; ++i,++k) {
+          d[k] = jointRecord.jointDispl[i];
+          if (d[k] != 0.0) {
+            mytest = true;
+          } // end if //
+        } // end for //
+        jointRecNber = static_cast<long>(elementRecord.jj)-1 ;
       } // end for //
       if (mytest) { // Solo se ejecuta si el miembro tiene desplazamiento en alguno de sus extremos
-	real *temp;
-	dimVec(temp, elementDofs);
-	localElementStiffnessMatrix(sm, elementRecord);  // Calculo de la matriz de rigidez de miembro sm
-	mult3(elementRecord,d,temp);                // Calculo de los desplazamientos en coordenadas locales (d = r X D)
-	mult5(sm,temp, d,elementDofs);              // Calculo de las fuerzas primarias debido a movimientos de apoyos
-//	matVectMult(sm,temp, d,elementDofs);        // Calculo de las fuerzas primarias debido a movimientos de apoyos
-	freeVec(temp);
-	if (nhip > 0) {
-	  elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
-	} else {
-	  elementForcesRecNber=elementRecNber;
-	} // end if //
-	forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
-	for (size_t k=1; k<=elementDofs; ++k) {
-	  forcesInElement[k] = d[k];
-	} // end if //
-	elementsForcesBinaryFile.seekp(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
-	elementsForcesBinaryFile.write(reinterpret_cast<const char *> (forcesInElement), sizeOfElementForcesRecord);
+        real *temp;
+        dimVec(temp, elementDofs);
+        localElementStiffnessMatrix(sm, elementRecord);  // Calculo de la matriz de rigidez de miembro sm
+        mult3(elementRecord,d,temp);                // Calculo de los desplazamientos en coordenadas locales (d = r X D)
+        mult5(sm,temp, d,elementDofs);              // Calculo de las fuerzas primarias debido a movimientos de apoyos
+        //matVectMult(sm,temp, d,elementDofs);        // Calculo de las fuerzas primarias debido a movimientos de apoyos
+        freeVec(temp);
+        if (nhip > 0) {
+          elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
+        } else {
+          elementForcesRecNber=elementRecNber;
+        } // end if //
+        forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
+        for (size_t k=1; k<=elementDofs; ++k) {
+          forcesInElement[k] = d[k];
+        } // end if //
+        elementsForcesBinaryFile.seekp(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
+        elementsForcesBinaryFile.write(reinterpret_cast<const char *> (forcesInElement), sizeOfElementForcesRecord);
       } // end if //
     } // end for //
   } // end if //
@@ -230,9 +230,9 @@ void ade1d() {
       elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
       d[1] = elementRecord.ar*elementRecord.length*ct[elementRecord.materialType]*ato;
       if (nhip > 0) {
-	elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
+        elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
       } else {
-	elementForcesRecNber=elementRecNber;
+        elementForcesRecNber=elementRecNber;
       } // end if //
       elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
       elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
@@ -246,6 +246,6 @@ void ade1d() {
   freeVec(forcesInElement,0);
   freeVec(d);
   freeMat(sm);
-  elementsForcesBinaryFile.close();  
+  elementsForcesBinaryFile.close();
   cerr << "End of Part ade1d \n";
 } // end of ade1d() //

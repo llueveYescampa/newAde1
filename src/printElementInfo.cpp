@@ -7,45 +7,43 @@ using std::cout;
 void printElementInfo(const size_t &val, size_t &lin) 
 {
 
-   switch (val) {
-     case 1:
-       cout << "Datos de los miembros.\n" 
-            << "Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M";
+  switch (val) {
+  case 1:
+    cout << "Datos de los miembros.\n" 
+         << "Mbro  Ji  Jj   Long.      Area          K        Iyy        Izz   Cixy   Cjxy   Cxy   Cixz   Cjxz   Cxz   Cn=Ct T de M";
             
             
-        if(elementRecord.bz > 0 and elementRecord.by == 0) {
-            cout << "  Diam"; 
-        } else if(elementRecord.bz > 0 and elementRecord.by > 0) {    
-            cout << "     b      h";
-        } // end if//
+    if(elementRecord.bz > 0 and elementRecord.by == 0) {
+      cout << "  Diam"; 
+    } else if(elementRecord.bz > 0 and elementRecord.by > 0) {    
+      cout << "     b      h";
+    } // end if//
         
         
-        cout << '\n';   
-       lin += 2;
-       break;  
-     case 2:
-       cout << "CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyz).\n";
-       ++lin;
-       break;
-     case 3:
-       cout << "FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS\n"
-            << "Miembro  Junta             N           Vy           Vz            T           My           Mz\n";   
-       lin+=2;
-       break;
-     case 4:
-       cout << "FUERZAS EN LAS SECCIONES DE LOS MIEMBROS\n"
-              << "Miembro Junta       x          N         Vy         Vz          T         My         Mz\n";
-       lin+=2;       
-       break;
-     case 5:
-       cout << "\nFUERZAS EN LAS SECCIONES DE LOS MIEMBROS PARA LAS HIPOTESIS DE SOLICITACIONES\n";
-       lin+=2;     
-       break;       
-     case 6:
-       cout << "Miembro       x        Hip          N           Vy          Vz           T          My          Mz\n";
-       ++lin;     
-       break;
-//     default:
-//       break;
-   } // end switch //
+    cout << '\n';   
+    lin += 2;
+    break;  
+  case 2:
+    cout << "CARGAS Y VARIACIONES DE TEMPERATURA EN LOS MIEMBROS (referidas al systema local oxyz).\n";
+    ++lin;
+    break;
+  case 3:
+    cout << "FUERZAS PRIMARIAS EN LOS EXTREMOS DE LOS MIEMBROS\n"
+         << "Miembro  Junta             N           Vy           Vz            T           My           Mz\n";   
+    lin+=2;
+    break;
+  case 4:
+    cout << "FUERZAS EN LAS SECCIONES DE LOS MIEMBROS\n"
+         << "Miembro Junta       x          N         Vy         Vz          T         My         Mz\n";
+    lin+=2;       
+    break;
+  case 5:
+    cout << "\nFUERZAS EN LAS SECCIONES DE LOS MIEMBROS PARA LAS HIPOTESIS DE SOLICITACIONES\n";
+    lin+=2;     
+    break;       
+  case 6:
+    cout << "Miembro       x        Hip          N           Vy          Vz           T          My          Mz\n";
+    ++lin;     
+    break;
+  } // end switch //
 } // end of elementHeader //

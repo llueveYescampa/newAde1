@@ -39,7 +39,7 @@ void ade1b() {
   cout <<   "Propiedades de los tipos de materiales.\n";
   cout <<   "Tipo        E             G             Ct            Peso\n";
   for(size_t i=1; i<=nmat; ++i){
-      cout << i << setw(12) << e[i] << setw(14) << g[i] << setw(15) << ct[i] << setw(16) << pes[i] << '\n';
+    cout << i << setw(12) << e[i] << setw(14) << g[i] << setw(15) << ct[i] << setw(16) << pes[i] << '\n';
   } // end for //
   cout << '\n';
   lin += (nmat+5);
@@ -74,18 +74,18 @@ void ade1b() {
          << setw(11) << jointRecord.springsConstants[3]
          << setw(11) << jointRecord.springsConstants[4]
          << setw(11) << jointRecord.springsConstants[5] << fixed << '\n';
-         ++lin;
+    ++lin;
   } // end for //
   cout << '\n';
   ++lin;
   if (lin+m > 56) {
-     header(cout);
+    header(cout);
   } // end if //
   printElementInfo(1,lin);
   for(elementRecNber=0; elementRecNber<m; ++elementRecNber) {
     if (lin > 56) {
-       header(cout);
-       printElementInfo(1,lin);
+      header(cout);
+      printElementInfo(1,lin);
     } // end if //
     elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
     elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
@@ -103,10 +103,10 @@ void ade1b() {
     
     if(elementRecord.iar > 0) {
       if(elementRecord.iar==1 || elementRecord.iar==3) {
-         ji *= -1;
+        ji *= -1;
       } // end if //   
       if(elementRecord.iar==2 || elementRecord.iar==3) {
-         jj *= -1;
+        jj *= -1;
       } // end if //
     } // end if //
     cout << setw(4) << elementRecNber+1
@@ -128,20 +128,20 @@ void ade1b() {
          
          
     if(elementRecord.bz > 0) {
-        cout << setw(8) << elementRecord.bz; 
+      cout << setw(8) << elementRecord.bz; 
     } // end if//
     if(elementRecord.by > 0) {
-        cout << setw(7) << elementRecord.by;
+      cout << setw(7) << elementRecord.by;
     } // end if//
     cout << '\n';   
     
-/*        
-    if(elementRecord.bz > 0) {
-        cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n'; 
-    } else {
-       cout << '\n';   
-    } // end if //         
-*/    
+    /*        
+              if(elementRecord.bz > 0) {
+              cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n'; 
+              } else {
+              cout << '\n';   
+              } // end if //         
+    */    
     
     ++lin;
   } // end for //

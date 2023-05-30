@@ -16,37 +16,37 @@ using std::setprecision;
 #include "element.h"
 
 void wk1 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
-  {
-    real wx1 = wx;
-    real wy1 = wy;
+{
+  real wx1 = wx;
+  real wy1 = wy;
 
-    real zji = zj - zi;
-    real xji = xj - xi;
-    real all = sqrt((zji * zji + xji * xji));
-    real coseno = all / al;
-    real seno = (yj - yi) / al;
-    wy = wy1 * coseno;
-    wx = wy1 * seno;
-    coseno = xji / all;
-    seno = zji / all;
-    wx += wx1 * coseno + wz * seno;
-    wz = wz * coseno - wx1 * seno;
-  } // end wk1();
+  real zji = zj - zi;
+  real xji = xj - xi;
+  real all = sqrt((zji * zji + xji * xji));
+  real coseno = all / al;
+  real seno = (yj - yi) / al;
+  wy = wy1 * coseno;
+  wx = wy1 * seno;
+  coseno = xji / all;
+  seno = zji / all;
+  wx += wx1 * coseno + wz * seno;
+  wz = wz * coseno - wx1 * seno;
+} // end wk1();
 
 
 void wk2 (real &wx, real &wy, real &wz, const real &xi, const real &yi, const real &zi, const real &xj, const real &yj, const real &zj, const real &al)
 {
-    real wx1 = wx;
-    real zji = zj - zi;
-    real xji = xj - xi;
-    real all = sqrt((zji * zji + xji * xji));
-    real coseno = all / al;
-    real seno = (yj - yi) / al;
-    wx = wy * seno / coseno;
-    coseno = xji / all;
-    seno = zji / all;
-    wx +=  ((wx1 * coseno / seno) + (wz * seno / coseno));
-    wz -= wx;
+  real wx1 = wx;
+  real zji = zj - zi;
+  real xji = xj - xi;
+  real all = sqrt((zji * zji + xji * xji));
+  real coseno = all / al;
+  real seno = (yj - yi) / al;
+  wx = wy * seno / coseno;
+  coseno = xji / all;
+  seno = zji / all;
+  wx +=  ((wx1 * coseno / seno) + (wz * seno / coseno));
+  wz -= wx;
 
 } // end wk2();
 
@@ -97,100 +97,100 @@ void ade1e() {
     printElementInfo(2,lin);
     for (size_t i=1; i<=nmc; ++i) {
       if (lin > 56) {
-	header(cout);
+        header(cout);
         cout << titleCase[icas] << "\n\n";
-        lin+=2;	
-	printElementInfo(2,lin);
+        lin+=2;
+        printElementInfo(2,lin);
       } // end if //
       cout << '\n';
       ++lin;
-      
+
       for (size_t i=1; i<=elementDofs; ++i) {
-	d[i] = 0.0;
+        d[i] = 0.0;
       } // end if //
       for (size_t i=0; i<=totalNumberOfForces; ++i) {
-	forcesInElement[i] = 0.0;
+        forcesInElement[i] = 0.0;
       } // end if //
-            
+
       // inizilizar sm, d, forcesInElement. Hace falta realmente?
 
-      
+
       cin >> elementRecNber; --elementRecNber;// =   static_cast<long>(w[1]) -1;
       size_t npu, npc, npv, npar, ntor;
       real ato1, dty, dtz, by,bz;
-      
+
       cin >> npu >> npc >> npv >> npar >> ntor >> ato1 >> dty >> dtz >> by >> bz;
 
       if (npu > 0) {
-	if (wx != NULL) {
-	  freeVec(wx); freeVec(wy); freeVec(wz); freeVec(aw); freeVec(bw);
-	} // end if //
-	dimVec(wx,npu); dimVec(wy,npu); dimVec(wz,npu); dimVec(aw,npu); dimVec(bw,npu);
+        if (wx != NULL) {
+          freeVec(wx); freeVec(wy); freeVec(wz); freeVec(aw); freeVec(bw);
+        } // end if //
+        dimVec(wx,npu); dimVec(wy,npu); dimVec(wz,npu); dimVec(aw,npu); dimVec(bw,npu);
       } // end if //
 
       if (npc > 0) {
-	if (px != NULL) {
-	  freeVec(px); freeVec(py); freeVec(pz); freeVec(ap);
-	} // end if //
-	dimVec(px,npc); dimVec(py,npc); dimVec(pz,npc); dimVec(ap,npc);
+        if (px != NULL) {
+          freeVec(px); freeVec(py); freeVec(pz); freeVec(ap);
+        } // end if //
+        dimVec(px,npc); dimVec(py,npc); dimVec(pz,npc); dimVec(ap,npc);
       } // end if //
 
       if (npv > 0) {
-	if (wxi != NULL) {
-	  freeVec(wxi); freeVec(wyi); freeVec(wzi);freeVec(wxj); freeVec(wyj); freeVec(wzj); freeVec(awv); freeVec(bwv);
-	} // end if //
-	dimVec(wxi,npv); dimVec(wyi,npv); dimVec(wzi,npv);dimVec(wxj,npv); dimVec(wyj,npv); dimVec(wzj,npv); dimVec(awv,npv); dimVec(bwv,npv);
+        if (wxi != NULL) {
+          freeVec(wxi); freeVec(wyi); freeVec(wzi);freeVec(wxj); freeVec(wyj); freeVec(wzj); freeVec(awv); freeVec(bwv);
+        } // end if //
+        dimVec(wxi,npv); dimVec(wyi,npv); dimVec(wzi,npv);dimVec(wxj,npv); dimVec(wyj,npv); dimVec(wzj,npv); dimVec(awv,npv); dimVec(bwv,npv);
       } // end if //
 
       if (npar > 0) {
-	if (parX != NULL) {
-	  freeVec(parX); freeVec(parY); freeVec(parZ); freeVec(aPar);
-	} // end if //
-	dimVec(parX,npar); dimVec(parY,npar); dimVec(parZ,npar); dimVec(aPar,npar);
+        if (parX != NULL) {
+          freeVec(parX); freeVec(parY); freeVec(parZ); freeVec(aPar);
+        } // end if //
+        dimVec(parX,npar); dimVec(parY,npar); dimVec(parZ,npar); dimVec(aPar,npar);
       } // end if //
 
       if (ntor > 0) {
-	if (axialTor != NULL) {
-	  freeVec(axialTor); freeVec(aTor);freeVec(bTor);
-	} // end if //
-	dimVec(axialTor,ntor); dimVec(aTor,ntor);dimVec(bTor,ntor);
+        if (axialTor != NULL) {
+          freeVec(axialTor); freeVec(aTor);freeVec(bTor);
+        } // end if //
+        dimVec(axialTor,ntor); dimVec(aTor,ntor);dimVec(bTor,ntor);
       } // end if //
 
 
       if ((npu + npc + npv + npar + ntor + ato1 + dty + dtz) == 0) {
-	logico = false;
-	npu = npu1;
-	npc = npc1;
-	npv = npv1;
-	npar = npar1;
-	ntor = ntor1;
-	ato1 = ato11;
-	dty = dty1;
-	dtz = dtz1;
+        logico = false;
+        npu = npu1;
+        npc = npc1;
+        npv = npv1;
+        npar = npar1;
+        ntor = ntor1;
+        ato1 = ato11;
+        dty = dty1;
+        dtz = dtz1;
       } else {
-	logico = true;
-	npu1 = npu;
-	npc1 = npc;
-	npv1 = npv;
-	npar1 = npar;
-	ntor1 = ntor;
-	ato11 = ato1;
-	dty1 = dty;
-	dtz1 = dtz;
+        logico = true;
+        npu1 = npu;
+        npc1 = npc;
+        npv1 = npv;
+        npar1 = npar;
+        ntor1 = ntor;
+        ato11 = ato1;
+        dty1 = dty;
+        dtz1 = dtz;
       } // end if //
       cout << "Miembro" << setw(6) <<  elementRecNber+1
-	<< "        ATO1 =" << setw(9) << setprecision(3) << ato1
-	<< " DTY="  << setw(9) << setprecision(3) << dty
-	<< " DTZ="   << setw(9) << setprecision(3) << dtz << '\n';
+           << "        ATO1 =" << setw(9) << setprecision(3) << ato1
+           << " DTY="  << setw(9) << setprecision(3) << dty
+           << " DTZ="   << setw(9) << setprecision(3) << dtz << '\n';
       ++lin;
       elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
       elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
 
       if (by == 0) {
-	by = elementRecord.by;
+        by = elementRecord.by;
       } // end if //
       if (bz == 0) {
-	bz = elementRecord.bz;
+        bz = elementRecord.bz;
       } // end if //
 
       axiso = 0.0;
@@ -203,214 +203,214 @@ void ade1e() {
 
       // Calculo de las fuerzas primarias debido a cargas uniformes
       for (size_t ll = 1; ll<= npu; ++ll) { // Solo se ejecuta si existen cargas uniformes
-	if (logico == false) {
-	  k = 0;
-	  Wx = wx[ll];
-	  Wy = wy[ll];
-	  Wz = wz[ll];
-	  a = aw[ll];
-	  b = bw[ll];
-	} else {
-	  cin >> k >> Wx >> Wy >> Wz >> a >> b;
+        if (logico == false) {
+          k = 0;
+          Wx = wx[ll];
+          Wy = wy[ll];
+          Wz = wz[ll];
+          a = aw[ll];
+          b = bw[ll];
+        } else {
+          cin >> k >> Wx >> Wy >> Wz >> a >> b;
           wx[ll] = Wx;
           wy[ll] = Wy;
           wz[ll] = Wz;
-          aw[ll] = a; 
-          bw[ll] = b; 
-	} // end if //
-	if (a < 0.0) {
-	  a = -(a*elementRecord.length);
-	} // end if //
-	if (b < 0.0) {
-	  b = -(b*elementRecord.length);
-	} else if (b == 0.0){
-	  b = elementRecord.length;
-	} // end if //
-	if ( k > 0) {
-	  jointRecNber= elementRecord.ji-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xi = jointRecord.x;
-	  real yi = jointRecord.y;
-	  real zi = jointRecord.z;
+          aw[ll] = a;
+          bw[ll] = b;
+        } // end if //
+        if (a < 0.0) {
+          a = -(a*elementRecord.length);
+        } // end if //
+        if (b < 0.0) {
+          b = -(b*elementRecord.length);
+        } else if (b == 0.0){
+          b = elementRecord.length;
+        } // end if //
+        if ( k > 0) {
+          jointRecNber= elementRecord.ji-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xi = jointRecord.x;
+          real yi = jointRecord.y;
+          real zi = jointRecord.z;
 
-	  jointRecNber= elementRecord.jj-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xj = jointRecord.x;
-	  real yj = jointRecord.y;
-	  real zj = jointRecord.z;
-	  
-	  if (k == 1) {
-	    wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	  } else if (k == 2){
-	    wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	  } // end if //
-	} // end if //
-	cout << "Npu = "  << setw(1) << ll
-	  << "  Wx ="  << setw(9) << setprecision(3) << Wx
-	  << " Wy ="  << setw(9)                    << Wy
-	  << " Wz ="  << setw(9)                    << Wz
-	  << " A  ="   << setw(9)                    << a
-	  << " B  ="   << setw(9)                    << b << '\n';
-	++lin;
+          jointRecNber= elementRecord.jj-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xj = jointRecord.x;
+          real yj = jointRecord.y;
+          real zj = jointRecord.z;
 
-	size_t myloop;
-	if ((elementRecord.length - a - b) > 0) {
-	  myloop = 2;
-	} else {
-	  myloop = 1;
-	} // end if //
-	real ra;
-	for (size_t iv=1; iv<=myloop; ++iv) {
-	  if (Wx != 0.0 ) {
-	    d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * 0.5 *Wx* (a + elementRecord.length);
-	    axiso -=  Wx * (elementRecord.length - a);
-	  } // end if //
+          if (k == 1) {
+            wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+          } else if (k == 2){
+            wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+          } // end if //
+        } // end if //
+        cout << "Npu = "  << setw(1) << ll
+             << "  Wx ="  << setw(9) << setprecision(3) << Wx
+             << " Wy ="  << setw(9)                    << Wy
+             << " Wz ="  << setw(9)                    << Wz
+             << " A  ="   << setw(9)                    << a
+             << " B  ="   << setw(9)                    << b << '\n';
+        ++lin;
 
-	  if (Wy != 0.0 ) {
-	    d[6] -=  (elementRecord.length - a) * (elementRecord.length - a) * (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a));
-	    d[12] += (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a));
-	    ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wy / elementRecord.length);
-	    vyisoi -=  ra;
-	    vyisoj +=  (ra -  (elementRecord.length - a) * Wy );
-	  } // end if //
+        size_t myloop;
+        if ((elementRecord.length - a - b) > 0) {
+          myloop = 2;
+        } else {
+          myloop = 1;
+        } // end if //
+        real ra;
+        for (size_t iv=1; iv<=myloop; ++iv) {
+          if (Wx != 0.0 ) {
+            d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * 0.5 *Wx* (a + elementRecord.length);
+            axiso -=  Wx * (elementRecord.length - a);
+          } // end if //
 
-	  if (Wz != 0.0) {
-	    d[5] +=  (elementRecord.length - a) * (elementRecord.length - a) * (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a));
-	    d[11] -= (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a));
-	    ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wz / elementRecord.length );
-	    vzisoi -=  ra;
-	    vzisoj +=  (ra -  (elementRecord.length - a) * Wz);
-	  } // end if //
-	  
-	  for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
-	    real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-	    real ax,Vy,Vz,amy,amz;
-	    if (xi < a) {
-	      ax = 0.0;
-	      Vy = 0.0;
-	      Vz = 0.0;
-	      amy = 0.0;
-	      amz = 0.0;
-	    } else {
-	      ax = -(xi - a) * Wx ;
-	      Vy =  (xi - a) * Wy ;
-	      Vz =  (xi - a) * Wz ;
-	      amy = (xi - a) * (xi - a) * (.5 * Wz );
-	      amz = (xi - a) * (xi - a) * (.5 * Wy );
-	    } // end if //
-	    forcesInElement[++kk] += ax;
-	    forcesInElement[++kk] += Vy;
-	    forcesInElement[++kk] += Vz;
-	    ++kk;
-	    forcesInElement[++kk] += amy;
-	    forcesInElement[++kk] += amz;
-	  } // end for l //
-	  Wx *= -1.0;
-	  Wy *= -1.0;
-	  Wz *= -1.0;
-	  a += b;
-	} // end for iv //
+          if (Wy != 0.0 ) {
+            d[6] -=  (elementRecord.length - a) * (elementRecord.length - a) * (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a));
+            d[12] += (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a));
+            ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wy / elementRecord.length);
+            vyisoi -=  ra;
+            vyisoj +=  (ra -  (elementRecord.length - a) * Wy );
+          } // end if //
+
+          if (Wz != 0.0) {
+            d[5] +=  (elementRecord.length - a) * (elementRecord.length - a) * (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a));
+            d[11] -= (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a));
+            ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wz / elementRecord.length );
+            vzisoi -=  ra;
+            vzisoj +=  (ra -  (elementRecord.length - a) * Wz);
+          } // end if //
+
+          for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+            real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
+            real ax,Vy,Vz,amy,amz;
+            if (xi < a) {
+              ax = 0.0;
+              Vy = 0.0;
+              Vz = 0.0;
+              amy = 0.0;
+              amz = 0.0;
+            } else {
+              ax = -(xi - a) * Wx ;
+              Vy =  (xi - a) * Wy ;
+              Vz =  (xi - a) * Wz ;
+              amy = (xi - a) * (xi - a) * (.5 * Wz );
+              amz = (xi - a) * (xi - a) * (.5 * Wy );
+            } // end if //
+            forcesInElement[++kk] += ax;
+            forcesInElement[++kk] += Vy;
+            forcesInElement[++kk] += Vz;
+            ++kk;
+            forcesInElement[++kk] += amy;
+            forcesInElement[++kk] += amz;
+          } // end for l //
+          Wx *= -1.0;
+          Wy *= -1.0;
+          Wz *= -1.0;
+          a += b;
+        } // end for iv //
       } // end for //
 
       // Calculo de las fuerzas primarias debido a cargas concentradas
       for (size_t ll = 1; ll<= npc; ++ll) { // Solo se ejecuta si existen cargas concentradas
-	if (logico == false) {
-	  k = 0;
-	  Px = px[ll];
-	  Py = py[ll];
-	  Pz = pz[ll];
-	  a  = ap[ll];
-	} else {
-	  cin >> k >> Px >> Py >> Pz >> a;
+        if (logico == false) {
+          k = 0;
+          Px = px[ll];
+          Py = py[ll];
+          Pz = pz[ll];
+          a  = ap[ll];
+        } else {
+          cin >> k >> Px >> Py >> Pz >> a;
           px[ll] = Px;
           py[ll] = Py;
           pz[ll] = Pz;
           ap[ll] = a;
-	} // end if //
-	if (a < 0) {
-	  a = -(a*elementRecord.length);
-	} // end if //
+        } // end if //
+        if (a < 0) {
+          a = -(a*elementRecord.length);
+        } // end if //
 
-	if ( k > 0) {
-        real Px1,Py1,Pz1;
-        Px1 = Px;
-        Py1 = Py;
-        Pz1 = Pz;
-        Px = elementRecord.r[0] * Px1 + elementRecord.r[1] * Py1 +  elementRecord.r[2] * Pz1;
-        Py = elementRecord.r[3] * Px1 + elementRecord.r[4] * Py1 +  elementRecord.r[5] * Pz1;
-        Pz = elementRecord.r[6] * Px1 + elementRecord.r[7] * Py1 +  elementRecord.r[8] * Pz1;
-	} // end if //
+        if ( k > 0) {
+          real Px1,Py1,Pz1;
+          Px1 = Px;
+          Py1 = Py;
+          Pz1 = Pz;
+          Px = elementRecord.r[0] * Px1 + elementRecord.r[1] * Py1 +  elementRecord.r[2] * Pz1;
+          Py = elementRecord.r[3] * Px1 + elementRecord.r[4] * Py1 +  elementRecord.r[5] * Pz1;
+          Pz = elementRecord.r[6] * Px1 + elementRecord.r[7] * Py1 +  elementRecord.r[8] * Pz1;
+        } // end if //
 
 
-	cout << "Npc = " << setw(1) << ll
-	  << "  Px =" << setw(9) << setprecision(3) << Px
-	  << " Py ="  << setw(9)                    << Py
-	  << " Pz ="  << setw(9)                    << Pz
-	  << " A  ="  << setw(9)                    << a << '\n';
-	++lin;
+        cout << "Npc = " << setw(1) << ll
+             << "  Px =" << setw(9) << setprecision(3) << Px
+             << " Py ="  << setw(9)                    << Py
+             << " Pz ="  << setw(9)                    << Pz
+             << " A  ="  << setw(9)                    << a << '\n';
+        ++lin;
 
-	if (Px != 0.0) {
-	  d[7] -=  Px * a / (elementRecord.ar * elementRecord.length);
-	  axiso -=  Px;
-	} // end if //
+        if (Px != 0.0) {
+          d[7] -=  Px * a / (elementRecord.ar * elementRecord.length);
+          axiso -=  Px;
+        } // end if //
 
-	if (Py != 0.0) {
-	  d[6] -= Py * a * (elementRecord.length - a) * (2 * elementRecord.length - a) / (6 * elementRecord.length * elementRecord.length * elementRecord.az);
-	  d[12] +=  Py * a * (elementRecord.length * elementRecord.length - a * a) / (6 * elementRecord.length * elementRecord.length * elementRecord.az);
-	  vyisoi -=  Py * (elementRecord.length - a) / elementRecord.length;
-	  vyisoj -=  Py * a / elementRecord.length;
-	} // end if //
+        if (Py != 0.0) {
+          d[6] -= Py * a * (elementRecord.length - a) * (2 * elementRecord.length - a) / (6 * elementRecord.length * elementRecord.length * elementRecord.az);
+          d[12] +=  Py * a * (elementRecord.length * elementRecord.length - a * a) / (6 * elementRecord.length * elementRecord.length * elementRecord.az);
+          vyisoi -=  Py * (elementRecord.length - a) / elementRecord.length;
+          vyisoj -=  Py * a / elementRecord.length;
+        } // end if //
 
-	if (Pz != 0.0) {
-	  d[5] +=  Pz * a * (elementRecord.length - a) * (2 * elementRecord.length - a) / (6 * elementRecord.length * elementRecord.length * elementRecord.ay);
-	  d[11] -= Pz * a * (elementRecord.length * elementRecord.length - a * a) / (6 * elementRecord.length * elementRecord.length * elementRecord.ay);
-	  vzisoi -=  Pz * (elementRecord.length - a) / elementRecord.length;
-	  vzisoj -=  Pz * a / elementRecord.length;
-	} // end if //
+        if (Pz != 0.0) {
+          d[5] +=  Pz * a * (elementRecord.length - a) * (2 * elementRecord.length - a) / (6 * elementRecord.length * elementRecord.length * elementRecord.ay);
+          d[11] -= Pz * a * (elementRecord.length * elementRecord.length - a * a) / (6 * elementRecord.length * elementRecord.length * elementRecord.ay);
+          vzisoi -=  Pz * (elementRecord.length - a) / elementRecord.length;
+          vzisoj -=  Pz * a / elementRecord.length;
+        } // end if //
 
-	for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
-	  real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-	  real ax,Vy,Vz,amy,amz;
-	  if (xi < a) {
-	    ax = 0.0;
-	    Vy = 0.0;
-	    Vz = 0.0;
-	    amy = 0.0;
-	    amz = 0.0;
-	  } else if (xi >= a) {
-	    ax = -Px;
-	    Vy = Py;
-	    Vz = Pz;
-	    amy = Pz * (xi - a);
-	    amz = Py * (xi - a);
-	  } // end if //
-	  forcesInElement[++kk] += ax;
-	  forcesInElement[++kk] += Vy;
-	  forcesInElement[++kk] += Vz;
-	  ++kk;
-	  forcesInElement[++kk] += amy;
-	  forcesInElement[++kk] += amz;
-	} // end for //
-	
+        for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+          real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
+          real ax,Vy,Vz,amy,amz;
+          if (xi < a) {
+            ax = 0.0;
+            Vy = 0.0;
+            Vz = 0.0;
+            amy = 0.0;
+            amz = 0.0;
+          } else if (xi >= a) {
+            ax = -Px;
+            Vy = Py;
+            Vz = Pz;
+            amy = Pz * (xi - a);
+            amz = Py * (xi - a);
+          } // end if //
+          forcesInElement[++kk] += ax;
+          forcesInElement[++kk] += Vy;
+          forcesInElement[++kk] += Vz;
+          ++kk;
+          forcesInElement[++kk] += amy;
+          forcesInElement[++kk] += amz;
+        } // end for //
+
       } // end for //
 
 
       // Calculo de las fuerzas primarias debido a cargas linealmente variables
       for (size_t ll = 1; ll<= npv; ++ll) { // Solo se ejecuta si existen linealmente variables
-	if (logico == false) {
-	  k = 0;
-	  Wx = wxi[ll];
-	  Px = wxj[ll];
-	  Wy = wyi[ll];
-	  Py = wyj[ll];
-	  Wz = wzi[ll];
-	  Pz = wzj[ll];
-	  a = awv[ll];
-	  b = bwv[ll];
-	} else {
-	  cin >> k >> Wx >> Px >> Wy >> Py >> Wz >> Pz >> a >> b;
+        if (logico == false) {
+          k = 0;
+          Wx = wxi[ll];
+          Px = wxj[ll];
+          Wy = wyi[ll];
+          Py = wyj[ll];
+          Wz = wzi[ll];
+          Pz = wzj[ll];
+          a = awv[ll];
+          b = bwv[ll];
+        } else {
+          cin >> k >> Wx >> Px >> Wy >> Py >> Wz >> Pz >> a >> b;
           wxi[ll] = Wx;
           wxj[ll] = Px;
           wyi[ll] = Wy;
@@ -419,266 +419,266 @@ void ade1e() {
           wzj[ll] = Pz;
           awv[ll] = a;
           bwv[ll] = b;
-	} // end if //
-	if (a < 0.0) {
-	  a = -(a*elementRecord.length);
-	} // end if //
-	if (b < 0.0) {
-	  b = -(b*elementRecord.length);
-	} else if (b == 0.0){
-	  b = elementRecord.length;
-	} // end if //
+        } // end if //
+        if (a < 0.0) {
+          a = -(a*elementRecord.length);
+        } // end if //
+        if (b < 0.0) {
+          b = -(b*elementRecord.length);
+        } else if (b == 0.0){
+          b = elementRecord.length;
+        } // end if //
 
-	if ( k > 0) {
-	  jointRecNber= elementRecord.ji-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xi = jointRecord.x;
-	  real yi = jointRecord.y;
-	  real zi = jointRecord.z;
+        if ( k > 0) {
+          jointRecNber= elementRecord.ji-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xi = jointRecord.x;
+          real yi = jointRecord.y;
+          real zi = jointRecord.z;
 
-	  jointRecNber= elementRecord.jj-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xj = jointRecord.x;
-	  real yj = jointRecord.y;
-	  real zj = jointRecord.z;
-	  if (k == 1) {
-	    wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	    wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	  } else if (k == 2){
-	    wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	    wk2(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	  } // end if //
-	} // end if //
+          jointRecNber= elementRecord.jj-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xj = jointRecord.x;
+          real yj = jointRecord.y;
+          real zj = jointRecord.z;
+          if (k == 1) {
+            wk1(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+            wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+          } else if (k == 2){
+            wk2(Wx,Wy,Wz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+            wk2(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+          } // end if //
+        } // end if //
 
-	cout << "Npv = "  << setw(1) << ll
-	  << "  Wxi=" << setw(9) << setprecision(3) << Wx
-	  << " Wxj="  << setw(9)                    << Px
-	  << " Wyi="  << setw(9)                    << Wy
-	  << " Wyj="  << setw(9)                    << Py
-	  << " Wzi="  << setw(9)                    << Wz
-	  << " Wzj="  << setw(9)                    << Pz
-	  << " A  ="   << setw(9)                    << a
-	  << " B  ="   << setw(9)                    << b << '\n';
-	++lin;
+        cout << "Npv = "  << setw(1) << ll
+             << "  Wxi=" << setw(9) << setprecision(3) << Wx
+             << " Wxj="  << setw(9)                    << Px
+             << " Wyi="  << setw(9)                    << Wy
+             << " Wyj="  << setw(9)                    << Py
+             << " Wzi="  << setw(9)                    << Wz
+             << " Wzj="  << setw(9)                    << Pz
+             << " A  ="   << setw(9)                    << a
+             << " B  ="   << setw(9)                    << b << '\n';
+        ++lin;
 
-	real atemp1 = Px;
-	real atemp2 = Py;
-	real atemp3 = Pz;
-	size_t myloop;
-	if ((elementRecord.length - a - b) > 0) {
-	  Px = Wx + (Px - Wx) / b * (elementRecord.length - a);
-	  Py = Wy + (Py - Wy) / b * (elementRecord.length - a);
-	  Pz = Wz + (Pz - Wz) / b * (elementRecord.length - a);
-	  myloop = 2;
-	} else {
-	  myloop = 1;
-	} // end if //
-	real ra;
-	for (size_t iv=1; iv<=myloop; ++iv) {
-	  if (Wx != 0.0 or Px != 0) {
-	    d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * (.5 * a * (Wx + Px) + (elementRecord.length - a) * (Wx + 2 * Px) / 6);
-	    axiso -=  0.5 * (Wx + Px) * (elementRecord.length - a);
-	  } // end if //
+        real atemp1 = Px;
+        real atemp2 = Py;
+        real atemp3 = Pz;
+        size_t myloop;
+        if ((elementRecord.length - a - b) > 0) {
+          Px = Wx + (Px - Wx) / b * (elementRecord.length - a);
+          Py = Wy + (Py - Wy) / b * (elementRecord.length - a);
+          Pz = Wz + (Pz - Wz) / b * (elementRecord.length - a);
+          myloop = 2;
+        } else {
+          myloop = 1;
+        } // end if //
+        real ra;
+        for (size_t iv=1; iv<=myloop; ++iv) {
+          if (Wx != 0.0 or Px != 0) {
+            d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * (.5 * a * (Wx + Px) + (elementRecord.length - a) * (Wx + 2 * Px) / 6);
+            axiso -=  0.5 * (Wx + Px) * (elementRecord.length - a);
+          } // end if //
 
 
-	  if (Wy != 0.0 or Py != 0) {
-	    d[6] -=  (elementRecord.length - a) * (elementRecord.length - a) * (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a) + (Py - Wy) / (360 * elementRecord.length * elementRecord.length * elementRecord.az) * (7 * elementRecord.length * elementRecord.length + 6 * a * elementRecord.length - 3 * a * a));
-	    d[12] += (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a) + (Py - Wy) / (360 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length - a) * (elementRecord.length - a) * (8 * elementRecord.length * elementRecord.length + 9 * a * elementRecord.length + 3 * a * a));
+          if (Wy != 0.0 or Py != 0) {
+            d[6] -=  (elementRecord.length - a) * (elementRecord.length - a) * (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a) + (Py - Wy) / (360 * elementRecord.length * elementRecord.length * elementRecord.az) * (7 * elementRecord.length * elementRecord.length + 6 * a * elementRecord.length - 3 * a * a));
+            d[12] += (Wy / (24 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a) + (Py - Wy) / (360 * elementRecord.length * elementRecord.length * elementRecord.az) * (elementRecord.length - a) * (elementRecord.length - a) * (8 * elementRecord.length * elementRecord.length + 9 * a * elementRecord.length + 3 * a * a));
 
-	    ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wy / elementRecord.length + (Py - Wy) / (6 * elementRecord.length));
-	    vyisoi -=  ra;
-	    vyisoj +=  (ra - 0.5 * (elementRecord.length - a) * (Wy + Py));
-	  } // end if //
+            ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wy / elementRecord.length + (Py - Wy) / (6 * elementRecord.length));
+            vyisoi -=  ra;
+            vyisoj +=  (ra - 0.5 * (elementRecord.length - a) * (Wy + Py));
+          } // end if //
 
-	  if (Wz != 0.0 or Pz != 0) {
-	    d[5] +=  (elementRecord.length - a) * (elementRecord.length - a) * (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a) + (Pz - Wz) / (360 * elementRecord.length * elementRecord.length * elementRecord.ay) * (7 * elementRecord.length * elementRecord.length + 6 * a * elementRecord.length - 3 * a * a));
-	    d[11] -= (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a) + (Pz - Wz) / (360 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length - a) * (elementRecord.length - a) * (8 * elementRecord.length * elementRecord.length + 9 * a * elementRecord.length + 3 * a * a));
+          if (Wz != 0.0 or Pz != 0) {
+            d[5] +=  (elementRecord.length - a) * (elementRecord.length - a) * (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length + 2 * elementRecord.length * a - a * a) + (Pz - Wz) / (360 * elementRecord.length * elementRecord.length * elementRecord.ay) * (7 * elementRecord.length * elementRecord.length + 6 * a * elementRecord.length - 3 * a * a));
+            d[11] -= (Wz / (24 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length * elementRecord.length - a * a) * (elementRecord.length * elementRecord.length - a * a) + (Pz - Wz) / (360 * elementRecord.length * elementRecord.length * elementRecord.ay) * (elementRecord.length - a) * (elementRecord.length - a) * (8 * elementRecord.length * elementRecord.length + 9 * a * elementRecord.length + 3 * a * a));
 
-	    ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wz / elementRecord.length + (Pz - Wz) / (6 * elementRecord.length));
-	    vzisoi -=  ra;
-	    vzisoj +=  (ra - .5 * (elementRecord.length - a) * (Wz + Pz));
-	  } // end if //
-	  
-	  for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
-	    real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-	    real ax,Vy,Vz,amy,amz;
-	    if (xi < a) {
-	      ax = 0.0;
-	      Vy = 0.0;
-	      Vz = 0.0;
-	      amy = 0.0;
-	      amz = 0.0;
-	    } else {
-	      ax = -(xi - a) * (Wx + .5 * (Px - Wx) * (xi - a) / (elementRecord.length - a));
-	      Vy =  (xi - a) * (Wy + .5 * (Py - Wy) * (xi - a) / (elementRecord.length - a));
-	      Vz =  (xi - a) * (Wz + .5 * (Pz - Wz) * (xi - a) / (elementRecord.length - a));
-	      amy = (xi - a) * (xi - a) * (.5 * Wz + (Pz - Wz) * (xi - a) / (6 * (elementRecord.length - a)));
-	      amz = (xi - a) * (xi - a) * (.5 * Wy + (Py - Wy) * (xi - a) / (6 * (elementRecord.length - a)));
-	    } // end if //
-	    forcesInElement[++kk] += ax;
-	    forcesInElement[++kk] += Vy;
-	    forcesInElement[++kk] += Vz;
-	    ++kk;
-	    forcesInElement[++kk] += amy;
-	    forcesInElement[++kk] += amz;
-	  } // end for l //
-	  Px = -Px;
-	  Py = -Py;
-	  Pz = -Pz;
-	  Wx = -atemp1;
-	  Wy = -atemp2;
-	  Wz = -atemp3;
-	  a += b;
-	} // end for iv //
+            ra = (elementRecord.length - a) * (elementRecord.length - a) * (.5 * Wz / elementRecord.length + (Pz - Wz) / (6 * elementRecord.length));
+            vzisoi -=  ra;
+            vzisoj +=  (ra - .5 * (elementRecord.length - a) * (Wz + Pz));
+          } // end if //
+
+          for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+            real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
+            real ax,Vy,Vz,amy,amz;
+            if (xi < a) {
+              ax = 0.0;
+              Vy = 0.0;
+              Vz = 0.0;
+              amy = 0.0;
+              amz = 0.0;
+            } else {
+              ax = -(xi - a) * (Wx + .5 * (Px - Wx) * (xi - a) / (elementRecord.length - a));
+              Vy =  (xi - a) * (Wy + .5 * (Py - Wy) * (xi - a) / (elementRecord.length - a));
+              Vz =  (xi - a) * (Wz + .5 * (Pz - Wz) * (xi - a) / (elementRecord.length - a));
+              amy = (xi - a) * (xi - a) * (.5 * Wz + (Pz - Wz) * (xi - a) / (6 * (elementRecord.length - a)));
+              amz = (xi - a) * (xi - a) * (.5 * Wy + (Py - Wy) * (xi - a) / (6 * (elementRecord.length - a)));
+            } // end if //
+            forcesInElement[++kk] += ax;
+            forcesInElement[++kk] += Vy;
+            forcesInElement[++kk] += Vz;
+            ++kk;
+            forcesInElement[++kk] += amy;
+            forcesInElement[++kk] += amz;
+          } // end for l //
+          Px = -Px;
+          Py = -Py;
+          Pz = -Pz;
+          Wx = -atemp1;
+          Wy = -atemp2;
+          Wz = -atemp3;
+          a += b;
+        } // end for iv //
       } // end for ll//
 
       // Calculo de las fuerzas primarias debido a Momento concentrados
       for (size_t ll = 1; ll<= npar; ++ll) { // Solo se ejecuta si existen Momentos concentrados
-	if (logico == false) {
-	  k = 0;
-	  Px = parX[ll];
-	  Py = parY[ll];
-	  Pz = parZ[ll];
-	  a  = aPar[ll];
-	} else {
-	  cin >> k >> Px >> Py >> Pz >> a;
+        if (logico == false) {
+          k = 0;
+          Px = parX[ll];
+          Py = parY[ll];
+          Pz = parZ[ll];
+          a  = aPar[ll];
+        } else {
+          cin >> k >> Px >> Py >> Pz >> a;
           parX[ll] = Px;
           parY[ll] = Py;
           parZ[ll] = Pz;
           aPar[ll] = a;
-	} // end if //
-	if (a < 0) {
-	  a = -(a*elementRecord.length);
-	} // end if //
-	if ( k > 0) {
-	  jointRecNber= elementRecord.ji-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xi = jointRecord.x;
-	  real yi = jointRecord.y;
-	  real zi = jointRecord.z;
+        } // end if //
+        if (a < 0) {
+          a = -(a*elementRecord.length);
+        } // end if //
+        if ( k > 0) {
+          jointRecNber= elementRecord.ji-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xi = jointRecord.x;
+          real yi = jointRecord.y;
+          real zi = jointRecord.z;
 
-	  jointRecNber= elementRecord.jj-1;
-	  jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-	  jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-	  real xj = jointRecord.x;
-	  real yj = jointRecord.y;
-	  real zj = jointRecord.z;
-	  wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
-	} // end if //
+          jointRecNber= elementRecord.jj-1;
+          jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+          jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+          real xj = jointRecord.x;
+          real yj = jointRecord.y;
+          real zj = jointRecord.z;
+          wk1(Px,Py,Pz,xi, yi, zi, xj, yj, zj,elementRecord.length);
+        } // end if //
 
-	cout << "Npar= " << setw(1) << ll
-	  << "  Mx =" << setw(9) << setprecision(3) << Px
-	  << " My ="  << setw(9)                    << Py
-	  << " Mz ="  << setw(9)                    << Pz
-	  << " A  ="  << setw(9)                    << a << '\n';
-	++lin;
+        cout << "Npar= " << setw(1) << ll
+             << "  Mx =" << setw(9) << setprecision(3) << Px
+             << " My ="  << setw(9)                    << Py
+             << " Mz ="  << setw(9)                    << Pz
+             << " A  ="  << setw(9)                    << a << '\n';
+        ++lin;
 
-	if (Px != 0.0) {
-	  d[10]  -=  Px * a / (elementRecord.ax * elementRecord.length);
-	  pariso -=  Px;
-	} // end if //
+        if (Px != 0.0) {
+          d[10]  -=  Px * a / (elementRecord.ax * elementRecord.length);
+          pariso -=  Px;
+        } // end if //
 
-	if (Py != 0.0) {
-	  d[5]  -=  Py / (6 * elementRecord.ay * elementRecord.length * elementRecord.length) * (2 * elementRecord.length * elementRecord.length - 6 * a * elementRecord.length + 3 * a * a);
-	  d[11] +=  Py / (6 * elementRecord.ay * elementRecord.length * elementRecord.length) * (elementRecord.length * elementRecord.length - 3 * a * a);
-	  vzisoi -=  Py / elementRecord.length;
-	  vzisoj +=  Py / elementRecord.length;
-	} // end if //
+        if (Py != 0.0) {
+          d[5]  -=  Py / (6 * elementRecord.ay * elementRecord.length * elementRecord.length) * (2 * elementRecord.length * elementRecord.length - 6 * a * elementRecord.length + 3 * a * a);
+          d[11] +=  Py / (6 * elementRecord.ay * elementRecord.length * elementRecord.length) * (elementRecord.length * elementRecord.length - 3 * a * a);
+          vzisoi -=  Py / elementRecord.length;
+          vzisoj +=  Py / elementRecord.length;
+        } // end if //
 
-	if (Pz != 0.0) {
-	  d[6] -=  Pz / (6 * elementRecord.az * elementRecord.length * elementRecord.length) * (2 * elementRecord.length * elementRecord.length - 6 * a * elementRecord.length + 3 * a * a);
-	  d[12] +=  Pz / (6 * elementRecord.az * elementRecord.length * elementRecord.length) * (elementRecord.length * elementRecord.length - 3 * a * a);
-	  vyisoi +=  Pz / elementRecord.length;
-	  vyisoj -=  Pz / elementRecord.length;
-	} // end if //
+        if (Pz != 0.0) {
+          d[6] -=  Pz / (6 * elementRecord.az * elementRecord.length * elementRecord.length) * (2 * elementRecord.length * elementRecord.length - 6 * a * elementRecord.length + 3 * a * a);
+          d[12] +=  Pz / (6 * elementRecord.az * elementRecord.length * elementRecord.length) * (elementRecord.length * elementRecord.length - 3 * a * a);
+          vyisoi +=  Pz / elementRecord.length;
+          vyisoj -=  Pz / elementRecord.length;
+        } // end if //
 
-	for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
-	  real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-	  real par,amy,amz;
-	  if (xi < a) {
-	    par = 0.0;
-	    amy = 0.0;
-	    amz = 0.0;
-	  } else {
-	    par = -Px;
-	    amy = Py;
-	    amz = -Pz;
-	  } // end if //
-	  forcesInElement[kk] += par;
-	  forcesInElement[++kk] += amy;
-	  forcesInElement[++kk] += amz;
-	  kk +=4;
-	} // end for l//
+        for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
+          real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
+          real par,amy,amz;
+          if (xi < a) {
+            par = 0.0;
+            amy = 0.0;
+            amz = 0.0;
+          } else {
+            par = -Px;
+            amy = Py;
+            amz = -Pz;
+          } // end if //
+          forcesInElement[kk] += par;
+          forcesInElement[++kk] += amy;
+          forcesInElement[++kk] += amz;
+          kk +=4;
+        } // end for l//
       } // end for ll//
 
       // Calculo de las fuerzas primarias debido a Torsor concentrado
       for (size_t ll = 1; ll<= ntor; ++ll) { // Solo se ejecuta si existen Torsor concentrado
-	if (logico == false) {
-	  Px = axialTor[ll];
-	  a = aTor[ll];
-	  b = bTor[ll];
-	} else {
-	  cin >> Px >> a >> b;
+        if (logico == false) {
+          Px = axialTor[ll];
+          a = aTor[ll];
+          b = bTor[ll];
+        } else {
+          cin >> Px >> a >> b;
           axialTor[ll] = Px;
           aTor[ll] = a;
           bTor[ll] = b;
-	} // end if //
-	if (a < 0.0) {
-	  a = -(a*elementRecord.length);
-	} // end if //
-	if (b < 0.0) {
-	  b = -(b*elementRecord.length);
-	} else if (b == 0){
-	  b = elementRecord.length;
-	} // end if //
+        } // end if //
+        if (a < 0.0) {
+          a = -(a*elementRecord.length);
+        } // end if //
+        if (b < 0.0) {
+          b = -(b*elementRecord.length);
+        } else if (b == 0){
+          b = elementRecord.length;
+        } // end if //
 
-	cout << "Ntor= " << setw(1) << ll
-	  << "   T =" << setw(9) << setprecision(3) << Px
-	  << " A  ="  << setw(9)                    << a
-	  << " B  ="  << setw(9)                    << b << '\n';
-	++lin;
-	if (Px != 0.0) {
-	  d[10] -=  Px / (elementRecord.ax * elementRecord.length) * (a * b + .5 * b * b);
-	  pariso -=  Px * b;
-	} // end if //
+        cout << "Ntor= " << setw(1) << ll
+             << "   T =" << setw(9) << setprecision(3) << Px
+             << " A  ="  << setw(9)                    << a
+             << " B  ="  << setw(9)                    << b << '\n';
+        ++lin;
+        if (Px != 0.0) {
+          d[10] -=  Px / (elementRecord.ax * elementRecord.length) * (a * b + .5 * b * b);
+          pariso -=  Px * b;
+        } // end if //
 
-	for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
-	  real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-	  real par;
-	  if (xi < a) {
-	    par = 0.0;
-	  } else if(xi >= a and xi <= (a + b)) {
-	    par = -(xi - a) * Px;
-	  } else if(xi > (a + b)) {
-	    par = -Px * b;
-	  } // end if //
-	  forcesInElement[kk] += par;
-	  kk += 6;
-	} // end for l//
+        for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
+          real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
+          real par;
+          if (xi < a) {
+            par = 0.0;
+          } else if(xi >= a and xi <= (a + b)) {
+            par = -(xi - a) * Px;
+          } else if(xi > (a + b)) {
+            par = -Px * b;
+          } // end if //
+          forcesInElement[kk] += par;
+          kk += 6;
+        } // end for l//
       } // end for ll//
 
       if (ato1 != 0) {
-	ato1 -= ato;
-	d[7] -=  ato1 * elementRecord.length * ct[elementRecord.materialType];
+        ato1 -= ato;
+        d[7] -=  ato1 * elementRecord.length * ct[elementRecord.materialType];
       } // end if //
 
       if (dty != 0) {
-	d[6]  +=  elementRecord.length * ct[elementRecord.materialType] * dty / (2 * by);
-	d[12] -=  elementRecord.length * ct[elementRecord.materialType] * dty / (2 * by);
+        d[6]  +=  elementRecord.length * ct[elementRecord.materialType] * dty / (2 * by);
+        d[12] -=  elementRecord.length * ct[elementRecord.materialType] * dty / (2 * by);
       } // end if //
 
       if (dtz != 0) {
-	d[5] -=  elementRecord.length * ct[elementRecord.materialType] * dtz / (2 * bz);
-	d[11] +=  elementRecord.length * ct[elementRecord.materialType] * dtz / (2 * bz);
+        d[5] -=  elementRecord.length * ct[elementRecord.materialType] * dtz / (2 * bz);
+        d[11] +=  elementRecord.length * ct[elementRecord.materialType] * dtz / (2 * bz);
       } // end if //
 
 
       localElementStiffnessMatrix(sm, elementRecord);  // Calculo de la matriz de rigidez de
-      mult5(sm,d,forcesInElement,elementDofs); 
-//      matVectMult(sm,d,forcesInElement,elementDofs);
+      mult5(sm,d,forcesInElement,elementDofs);
+      //      matVectMult(sm,d,forcesInElement,elementDofs);
       forcesInElement[1] = axiso - forcesInElement[7];
       forcesInElement[2] = vyisoi + (forcesInElement[6] + forcesInElement[12]) / elementRecord.length;
       forcesInElement[3] = vzisoi - (forcesInElement[5] + forcesInElement[11]) / elementRecord.length;
@@ -688,19 +688,19 @@ void ade1e() {
 
 
       if (nhip > 0) {
-	elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
+        elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
       } else {
-	elementForcesRecNber=elementRecNber;
+        elementForcesRecNber=elementRecNber;
       } // end if //
 
       real *temp;
       dimVec(temp, 0,totalNumberOfForces+1);
       elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
       elementsForcesBinaryFile.read(reinterpret_cast<char *> (&temp[0]), sizeOfElementForcesRecord);
-      
-      
+
+
       for (size_t k=1; k<=totalNumberOfForces; ++k) {
-	forcesInElement[k] += temp[k];
+        forcesInElement[k] += temp[k];
       } // end for //
       forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
       freeVec(temp,0);
@@ -738,12 +738,12 @@ void ade1e() {
     } // end if //
     elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
     elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
-    
+
     if (forcesInElement[0] != 0) {
       for (size_t k=1; k<=elementDofs; ++k) {
-	d[k] = 0.0;
-      } // end for //   
-      
+        d[k] = 0.0;
+      } // end for //
+
       elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
       elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
       real *globalForces;
@@ -752,48 +752,48 @@ void ade1e() {
       size_t k=(elementRecord.ji-1)*dofPerJoint;
       //cerr << k << '\n';
       for (size_t ii=1; ii<=dofPerJoint; ++ii) {
-	loadVector[++k] -= globalForces[ii];
+        loadVector[++k] -= globalForces[ii];
       } // end for //
       k=(elementRecord.jj-1)*dofPerJoint;
       //cerr << k << '\n';
       for (size_t ii=1; ii<=dofPerJoint; ++ii) {
-	loadVector[++k] -= globalForces[ii+dofPerJoint];
+        loadVector[++k] -= globalForces[ii+dofPerJoint];
       } // end for //
       freeVec(globalForces);
       if (nma + nmc + ato > 0) {
-	if (lin > 53) {
-	  header(cout);
+        if (lin > 53) {
+          header(cout);
           cout << titleCase[icas] << "\n\n";
-          lin+=2;	  
-	  printElementInfo(3,lin);
-	  logico = true;
-	} // end if //
-	if (logico == false) {
-	  printElementInfo(3,lin);
-	  logico = true;
-	} // end if //
-	cout << setw(7) << elementRecNber+1
-	  << setw(7) << elementRecord.ji << setw(16) << setprecision(3)
-	  << setw(14) << -forcesInElement[1]
-	  << setw(13) <<  forcesInElement[2]
-	  << setw(13) <<  forcesInElement[3]
-	  << setw(13) << -forcesInElement[4]
-	  << setw(13) <<  forcesInElement[5]
-	  << setw(13) << -forcesInElement[6] << '\n';
-	cout << setw(14) <<  elementRecord.jj << setw(16)
-	  << setw(14) <<  forcesInElement[7]
-	  << setw(13) << -forcesInElement[8]
-	  << setw(13) << -forcesInElement[9]
-	  << setw(13) <<  forcesInElement[10]
-	  << setw(13) << -forcesInElement[11]
-	  << setw(13) <<  forcesInElement[12] << '\n';
-	lin+=2;
+          lin+=2;
+          printElementInfo(3,lin);
+          logico = true;
+        } // end if //
+        if (logico == false) {
+          printElementInfo(3,lin);
+          logico = true;
+        } // end if //
+        cout << setw(7) << elementRecNber+1
+             << setw(7) << elementRecord.ji << setw(16) << setprecision(3)
+             << setw(14) << -forcesInElement[1]
+             << setw(13) <<  forcesInElement[2]
+             << setw(13) <<  forcesInElement[3]
+             << setw(13) << -forcesInElement[4]
+             << setw(13) <<  forcesInElement[5]
+             << setw(13) << -forcesInElement[6] << '\n';
+        cout << setw(14) <<  elementRecord.jj << setw(16)
+             << setw(14) <<  forcesInElement[7]
+             << setw(13) << -forcesInElement[8]
+             << setw(13) << -forcesInElement[9]
+             << setw(13) <<  forcesInElement[10]
+             << setw(13) << -forcesInElement[11]
+             << setw(13) <<  forcesInElement[12] << '\n';
+        lin+=2;
       } // end if //
       if (lin > 55) {
-	header(cout);
+        header(cout);
         cout << titleCase[icas] << "\n\n";
-        lin+=2;	
-	printElementInfo(3,lin);
+        lin+=2;
+        printElementInfo(3,lin);
       } // end if //
     } // end if //
   } // end for //
@@ -805,7 +805,7 @@ void ade1e() {
   freeVec(d);
   freeVec(forcesInElement,0);
   elementsForcesBinaryFile.close();
-  
+
   cerr << "End of Part ade1e \n";
   // ojo puede ir a ade1f o a aed1d //
 } // end of ade1e() //

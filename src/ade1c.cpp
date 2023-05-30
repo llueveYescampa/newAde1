@@ -37,26 +37,26 @@ void ade1c() {
     for (size_t i=1; i<=dofPerJoint; ++i){
       destinationVector[i] = ++ji;
       if (constraint[elementRecord.ji-1][i-1] == true) {
-          destinationVector[i] = 0;      
-      } // end if     
+        destinationVector[i] = 0;
+      } // end if
 
-      destinationVector[i + dofPerJoint] = ++jj;      
+      destinationVector[i + dofPerJoint] = ++jj;
       if (constraint[elementRecord.jj-1][i-1] == true) {
-          destinationVector[i+ dofPerJoint] = 0;      
-      } // end if     
+        destinationVector[i+ dofPerJoint] = 0;
+      } // end if
     } // end for //
     // assembling the global stiffness matrix\n
     for (size_t i=1; i<=elementDofs; ++i) {
       size_t row = destinationVector[i];
       if (row > 0) {
         for (size_t j=1; j<=i; ++j) {
-  	size_t col = destinationVector[j];
+          size_t col = destinationVector[j];
           if (col > 0) {
-	    if (row >= col) {
-  	    s[row][col] += sm[i][j];
-  	    } else {
-	      s[col][row] += sm[i][j];
-	    } // end if //
+            if (row >= col) {
+              s[row][col] += sm[i][j];
+            } else {
+              s[col][row] += sm[i][j];
+            } // end if //
           } // end if //
         } // end for //
       } // end if //
@@ -67,30 +67,30 @@ void ade1c() {
   for (jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
-    
+
     if (jointRecord.areThereSprings == true) {
       size_t row = (jointRecNber)*dofPerJoint + 1;
       for (size_t k=0; k < dofPerJoint; ++k,++row) {
-	  s[row][row] += jointRecord.springsConstants[k];
-      } // end for //    
-    } // end if //      
+        s[row][row] += jointRecord.springsConstants[k];
+      } // end for //
+    } // end if //
   } // end for //
 
-  
+
 
   for (size_t row=1; row<=nec; ++row) {
     if (s[row][row] == 0) {
-       size_t col = leftCol[row];
-       while ((col<row) and (s[row][col] == 0.0)) {
-          ++ col;
-       } // end for //
-       if (row == col) { // The whole row is empty
-         s[row][col] = 1.0;
-       } else { 
-         cerr << "Error in row: " << row << " of the srifness matrix. Quitting....\n" ;
-         cout << "Error in row: " << row << " of the srifness matrix. Quitting....\n" ;
-         exit(0);
-       } // end if //
+      size_t col = leftCol[row];
+      while ((col<row) and (s[row][col] == 0.0)) {
+        ++ col;
+      } // end for //
+      if (row == col) { // The whole row is empty
+        s[row][col] = 1.0;
+      } else {
+        cerr << "Error in row: " << row << " of the srifness matrix. Quitting....\n" ;
+        cout << "Error in row: " << row << " of the srifness matrix. Quitting....\n" ;
+        exit(0);
+      } // end if //
     } // end if //
   } // end for //
 

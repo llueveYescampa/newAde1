@@ -48,20 +48,20 @@ void ade1f() {
 
 
   //    impose boundary conditions on global load Vector
-  
+
   jointRecNber=0;
   size_t countingConstraints=0;
   do  {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
-    
+
     if (jointRecord.areThereRestrictions == true ) {
       ++countingConstraints;
       size_t row = (jointRecNber)*dofPerJoint + 1;
       for (size_t k=0; k < dofPerJoint; ++k,++row) {
-	if (constraint[jointRecNber][k] ) {
-	  loadVector[row]= 0.0;
-	} // end if //
+        if (constraint[jointRecNber][k] ) {
+          loadVector[row]= 0.0;
+        } // end if //
       } // end for //
     } // end if //
     ++jointRecNber;
@@ -96,10 +96,10 @@ void ade1f() {
     cout << setw(5) << jointRecNber+1 << setprecision(6);
     for (size_t j=0; j<dofPerJoint; ++j) {
       if (lin > 56) {
-	header(cout);
-	cout << titleCase[icas] << "\n\n";
-	lin+=2;
-	printJointInfo(4,lin);
+        header(cout);
+        cout << titleCase[icas] << "\n\n";
+        lin+=2;
+        printJointInfo(4,lin);
       } // end if //
       //loadVector[row] += jointRecord.jointDispl[j];
       cout << setw(16) << scientific << (loadVector[row++] + jointRecord.jointDispl[j]);
@@ -149,7 +149,7 @@ void ade1f() {
     localElementStiffnessMatrix(sm, elementRecord);  // Calculo de la matriz de rigidez de miembro sm
     mult3(elementRecord,d,temp);                // Calculo de los displacements en coordenadas locales (d = r X D)
     mult5(sm,temp, d,elementDofs);        // Calculo de las fuerzas en coordenadas locales
-//    matVectMult(sm,temp, d,elementDofs);        // Calculo de las fuerzas en coordenadas locales
+    //    matVectMult(sm,temp, d,elementDofs);        // Calculo de las fuerzas en coordenadas locales
     freeVec(temp);
 
     if (nhip > 0) {
@@ -190,11 +190,11 @@ void ade1f() {
     if (secctionsInsideAnElement > 0) {
       size_t kk = 12;
       for (size_t k=1; k<=secctionsInsideAnElement; ++k) {
-	cout << setw(21) << segment*k;
-	for (size_t i=1; i<=dofPerJoint; ++i) {
-	  cout <<  setw(11) << d[++kk];
-	} // end for //
-	cout << '\n';
+        cout << setw(21) << segment*k;
+        for (size_t i=1; i<=dofPerJoint; ++i) {
+          cout <<  setw(11) << d[++kk];
+        } // end for //
+        cout << '\n';
       } // end for //
       lin += secctionsInsideAnElement;
     } // end if //
@@ -250,11 +250,11 @@ void ade1f() {
   // opening files for processing data
   reactionsBinaryFile.open(fileName[3].c_str(),  ios::in | ios::out | ios::binary);
   if (!reactionsBinaryFile) {
-     reactionsBinaryFile.open(fileName[3].c_str(),  ios::out | ios::binary);
-     if (!reactionsBinaryFile) {
-        cerr << "File " << fileName[3] << " could not be opened.\n";
-       exit(1);
-     } // end if //
+    reactionsBinaryFile.open(fileName[3].c_str(),  ios::out | ios::binary);
+    if (!reactionsBinaryFile) {
+      cerr << "File " << fileName[3] << " could not be opened.\n";
+      exit(1);
+    } // end if //
   } // end if //
 
   real *jointReactionsRecord;
@@ -264,7 +264,7 @@ void ade1f() {
   jointReactionRecNber= static_cast<long>(icas-1);
   for(jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-    jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);    
+    jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
     for (size_t i=0; i<dofPerJoint; ++i) {
       loadVector[++k] += jointRecord.load[i];
       jointReactionsRecord[i] = loadVector[k];
@@ -308,4 +308,3 @@ void ade1f() {
   reactionsBinaryFile.close();
   cerr << "End of Part ade1f \n";
 } // end of ade1f() //
-

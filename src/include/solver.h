@@ -1,8 +1,8 @@
 #ifndef SOLVER
 #define SOLVER
 
-#define LDL
-//#define CHOLESKY
+  #define LDL
+  //#define CHOLESKY
 
   #if defined (LDL)
      #include "gaussElimination.h"
@@ -12,5 +12,3 @@
      #include "ConjugateGradient.h"
   #endif
 #endif
-
-
