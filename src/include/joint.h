@@ -11,7 +11,7 @@
 
 
   // Variables of joint header
-   const size_t  dofPerJoint = 6; // nodal dof
+   const posInt dofPerJoint = 6; // nodal dof
 
    struct Joint {
       real x,y,z;
@@ -28,21 +28,21 @@
   #ifndef MAIN
     extern fstream jointsBinaryFile;
     extern Joint     jointRecord;
-    extern long jointRecNber;
-    extern const long sizeOfJointRecord;
+    extern posInt jointRecNber;
+    extern const posInt sizeOfJointRecord;
     extern fstream reactionsBinaryFile;
   //  extern JointReactions jointReactionsRecord;
-    extern long jointReactionRecNber;
+    extern posInt jointReactionRecNber;
   //  extern const long sizeOfJointReactionsRecord;
 
   #else
     fstream jointsBinaryFile;
     Joint     jointRecord;
-    long jointRecNber;
-    long sizeOfJointRecord    = sizeof(Joint);
+    posInt jointRecNber;
+    posInt sizeOfJointRecord    = sizeof(Joint);
     fstream reactionsBinaryFile;
   //  JointReactions jointReactionsRecord;
-    long jointReactionRecNber;
+    posInt jointReactionRecNber;
   //  long sizeOfJointReactionsRecord    = sizeof(JointReactions);
   //  long sizeOfJointReactionsRecord;
   #endif

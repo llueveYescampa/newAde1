@@ -34,7 +34,7 @@ void ade1e() {
 
 
   // defining the size of the record for file elementsForcesBinaryFile
-  size_t totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
+  auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
   dimVec(forcesInElement,0,totalNumberOfForces+1); // forcesInElement[0] takes the place of the old tlar flag
   // end of defining the size of the record for file elementsForcesBinaryFile
 
@@ -47,22 +47,22 @@ void ade1e() {
 
   if (nmc > 0) {  // Solo se ejecuta si existen miembros cargados
     // new set of local variables
-    real *wx=NULL, *wy, *wz, *aw, *bw;
+    real *wx=nullptr, *wy=nullptr, *wz=nullptr, *aw=nullptr, *bw=nullptr;
     real a,b;
     real Wx,Wy,Wz;
-    real *px=NULL, *py, *pz, *ap;
+    real *px=nullptr, *py=nullptr, *pz=nullptr, *ap=nullptr;
     real Px,Py,Pz;
-    real *wxi=NULL, *wyi, *wzi,*wxj, *wyj, *wzj, *awv, *bwv;
+    real *wxi=nullptr, *wyi=nullptr, *wzi=nullptr,*wxj=nullptr, *wyj=nullptr, *wzj=nullptr, *awv=nullptr, *bwv=nullptr;
 
-    real *parX=NULL, *parY, *parZ, *aPar;
-    real *axialTor=NULL, *aTor,*bTor;
-    size_t npu1, npc1,  npv1,  npar1,  ntor1, ato11, dty1, dtz1;
+    real *parX=nullptr, *parY=nullptr, *parZ=nullptr, *aPar=nullptr;
+    real *axialTor=nullptr, *aTor=nullptr,*bTor=nullptr;
+    auto npu1=zero, npc1=zero,  npv1=zero,  npar1=zero,  ntor1=zero, ato11=zero, dty1=zero, dtz1=zero;
     real axiso,vyisoi,vyisoj,pariso, vzisoi, vzisoj;
-    size_t k;  // flag to define the coordinate system (global or local) of the loads
+    //auto k=zero;  // flag to define the coordinate system (global or local) of the loads
     // end of new set of local variables
 
     printElementInfo(2,lin);
-    for (size_t i=1; i<=nmc; ++i) {
+    for(auto i=one; i<=nmc; ++i) {
       if (lin > 56) {
         header(cout);
         cout << titleCase[icas] << "\n\n";
@@ -72,10 +72,10 @@ void ade1e() {
       cout << '\n';
       ++lin;
 
-      for (size_t i=1; i<=elementDofs; ++i) {
+      for(auto i=one; i<=elementDofs; ++i) {
         d[i] = 0.0;
       } // end if //
-      for (size_t i=0; i<=totalNumberOfForces; ++i) {
+      for(auto i=zero; i<=totalNumberOfForces; ++i) {
         forcesInElement[i] = 0.0;
       } // end if //
 
@@ -83,7 +83,7 @@ void ade1e() {
 
 
       cin >> elementRecNber; --elementRecNber;// =   static_cast<long>(w[1]) -1;
-      size_t npu, npc, npv, npar, ntor;
+      auto npu=zero, npc=zero, npv=zero, npar=zero, ntor=zero;
       real ato1, dty, dtz, by,bz;
 
       cin >> npu >> npc >> npv >> npar >> ntor >> ato1 >> dty >> dtz >> by >> bz;
@@ -169,9 +169,9 @@ void ade1e() {
 
 
       // Calculo de las fuerzas primarias debido a cargas uniformes
-      for (size_t ll = 1; ll<= npu; ++ll) { // Solo se ejecuta si existen cargas uniformes
+      for(auto ll = one; ll<= npu; ++ll) { // Solo se ejecuta si existen cargas uniformes
+        auto k=zero;
         if (logico == false) {
-          k = 0;
           Wx = wx[ll];
           Wy = wy[ll];
           Wz = wz[ll];
@@ -197,30 +197,29 @@ void ade1e() {
 
         if ( k > 0) {
           real Wx1,Wy1,Wz1;
+          Wx1 = Wx;
+          Wy1 = Wy;
+          Wz1 = Wz;
 
-            if ( k == 1) {
-              Wx1 = Wx;
-              Wy1 = Wy;
-              Wz1 = Wz;
-            } else if ( k == 2) {
-              jointRecNber= elementRecord.ji-1;
-              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-              real xi = jointRecord.x;
-              real yi = jointRecord.y;
-              real zi = jointRecord.z;
+          if ( k == 2) {
+            jointRecNber= elementRecord.ji-1;
+            jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+            jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+            real xi = jointRecord.x;
+            real yi = jointRecord.y;
+            real zi = jointRecord.z;
 
-              jointRecNber= elementRecord.jj-1;
-              jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
-              jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-              real xj = jointRecord.x;
-              real yj = jointRecord.y;
-              real zj = jointRecord.z;
+            jointRecNber= elementRecord.jj-1;
+            jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
+            jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
+            real xj = jointRecord.x;
+            real yj = jointRecord.y;
+            real zj = jointRecord.z;
 
-              Wx1 = Wx * sqrt( square(yj-yi) + square(zj-zi)) / elementRecord.length;
-              Wy1 = Wy * sqrt( square(xj-xi) + square(zj-zi)) / elementRecord.length;
-              Wz1 = Wz * sqrt( square(xj-xi) + square(yj-yi)) / elementRecord.length;
-            } // end if //
+            Wx1 = Wx * sqrt( square(yj-yi) + square(zj-zi)) / elementRecord.length;
+            Wy1 = Wy * sqrt( square(xj-xi) + square(zj-zi)) / elementRecord.length;
+            Wz1 = Wz * sqrt( square(xj-xi) + square(yj-yi)) / elementRecord.length;
+          } // end if //
 
           Wx = elementRecord.r[0] * Wx1 + elementRecord.r[1] * Wy1 +  elementRecord.r[2] * Wz1;
           Wy = elementRecord.r[3] * Wx1 + elementRecord.r[4] * Wy1 +  elementRecord.r[5] * Wz1;
@@ -235,14 +234,14 @@ void ade1e() {
              << " B  ="   << setw(9)                    << b << '\n';
         ++lin;
 
-        size_t myloop;
+        auto myloop=zero;
         if ((elementRecord.length - a - b) > 0) {
           myloop = 2;
         } else {
           myloop = 1;
         } // end if //
         real ra;
-        for (size_t iv=1; iv<=myloop; ++iv) {
+        for(auto iv=one; iv<=myloop; ++iv) {
           if (Wx != 0.0 ) {
             d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * 0.5 *Wx* (a + elementRecord.length);
             axiso -=  Wx * (elementRecord.length - a);
@@ -264,7 +263,7 @@ void ade1e() {
             vzisoj +=  (ra -  (elementRecord.length - a) * Wz);
           } // end if //
 
-          for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+          for(auto kk=one*12, l=one; l<=secctionsInsideAnElement; ++l) {
             real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
             real ax,Vy,Vz,amy,amz;
             if (xi < a) {
@@ -295,9 +294,9 @@ void ade1e() {
       } // end for //
 
       // Calculo de las fuerzas primarias debido a cargas concentradas
-      for (size_t ll = 1; ll<= npc; ++ll) { // Solo se ejecuta si existen cargas concentradas
+      for(auto ll = one; ll<= npc; ++ll) { // Solo se ejecuta si existen cargas concentradas
+        auto k=zero;
         if (logico == false) {
-          k = 0;
           Px = px[ll];
           Py = py[ll];
           Pz = pz[ll];
@@ -350,7 +349,7 @@ void ade1e() {
           vzisoj -=  Pz * a / elementRecord.length;
         } // end if //
 
-        for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+        for(auto kk=one*12, l=one; l<=secctionsInsideAnElement; ++l) {
           real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
           real ax,Vy,Vz,amy,amz;
           if (xi < a) {
@@ -378,9 +377,9 @@ void ade1e() {
 
 
       // Calculo de las fuerzas primarias debido a cargas linealmente variables
-      for (size_t ll = 1; ll<= npv; ++ll) { // Solo se ejecuta si existen linealmente variables
+      for(auto ll = one; ll<= npv; ++ll) { // Solo se ejecuta si existen linealmente variables
+        auto k=zero;
         if (logico == false) {
-          k = 0;
           Wx = wxi[ll];
           Px = wxj[ll];
           Wy = wyi[ll];
@@ -411,18 +410,16 @@ void ade1e() {
 
 
         if ( k > 0) {
-          real Wxi,Wyi,Wzi;
-          real Wxj,Wyj,Wzj;
 
-            if ( k == 1) {
-              Wxi = Wx;
-              Wyi = Wy;
-              Wzi = Wz;
+            real Wxi = Wx;
+            real Wyi = Wy;
+            real Wzi = Wz;
 
-              Wxj = Px;
-              Wyj = Py;
-              Wzj = Pz;
-            } else if ( k == 2) {
+            real Wxj = Px;
+            real Wyj = Py;
+            real Wzj = Pz;
+
+            if ( k == 2) {
               jointRecNber= elementRecord.ji-1;
               jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
               jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
@@ -477,7 +474,7 @@ void ade1e() {
         real atemp1 = Px;
         real atemp2 = Py;
         real atemp3 = Pz;
-        size_t myloop;
+        auto myloop=zero;
         if ((elementRecord.length - a - b) > 0) {
           Px = Wx + (Px - Wx) / b * (elementRecord.length - a);
           Py = Wy + (Py - Wy) / b * (elementRecord.length - a);
@@ -487,7 +484,7 @@ void ade1e() {
           myloop = 1;
         } // end if //
         real ra;
-        for (size_t iv=1; iv<=myloop; ++iv) {
+        for(auto iv=one; iv<=myloop; ++iv) {
           if (Wx != 0.0 or Px != 0) {
             d[7]  -= (elementRecord.length - a) / (elementRecord.ar * elementRecord.length) * (.5 * a * (Wx + Px) + (elementRecord.length - a) * (Wx + 2 * Px) / 6);
             axiso -=  0.5 * (Wx + Px) * (elementRecord.length - a);
@@ -512,7 +509,7 @@ void ade1e() {
             vzisoj +=  (ra - .5 * (elementRecord.length - a) * (Wz + Pz));
           } // end if //
 
-          for (size_t kk=12, l=1; l<=secctionsInsideAnElement; ++l) {
+          for(auto kk=one*12, l=one; l<=secctionsInsideAnElement; ++l) {
             real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
             real ax,Vy,Vz,amy,amz;
             if (xi < a) {
@@ -546,9 +543,9 @@ void ade1e() {
       } // end for ll//
 
       // Calculo de las fuerzas primarias debido a Momento concentrados
-      for (size_t ll = 1; ll<= npar; ++ll) { // Solo se ejecuta si existen Momentos concentrados
+      for(auto ll = one; ll<= npar; ++ll) { // Solo se ejecuta si existen Momentos concentrados
+        auto k=zero;
         if (logico == false) {
-          k = 0;
           Px = parX[ll];
           Py = parY[ll];
           Pz = parZ[ll];
@@ -602,7 +599,7 @@ void ade1e() {
           vyisoj -=  Pz / elementRecord.length;
         } // end if //
 
-        for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
+        for(auto kk=one*16, l=one; l<=secctionsInsideAnElement; ++l) {
           real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
           real par,amy,amz;
           if (xi < a) {
@@ -622,7 +619,7 @@ void ade1e() {
       } // end for ll//
 
       // Calculo de las fuerzas primarias debido a Torsor concentrado
-      for (size_t ll = 1; ll<= ntor; ++ll) { // Solo se ejecuta si existen Torsor concentrado
+      for(auto ll = one; ll<= ntor; ++ll) { // Solo se ejecuta si existen Torsor concentrado
         if (logico == false) {
           Px = axialTor[ll];
           a = aTor[ll];
@@ -652,7 +649,7 @@ void ade1e() {
           pariso -=  Px * b;
         } // end if //
 
-        for (size_t kk=16, l=1; l<=secctionsInsideAnElement; ++l) {
+        for(auto kk=one*16, l=one; l<=secctionsInsideAnElement; ++l) {
           real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
           real par;
           if (xi < a) {
@@ -706,7 +703,7 @@ void ade1e() {
       elementsForcesBinaryFile.read(reinterpret_cast<char *> (&temp[0]), sizeOfElementForcesRecord);
 
 
-      for (size_t k=1; k<=totalNumberOfForces; ++k) {
+      for(auto k=one; k<=totalNumberOfForces; ++k) {
         forcesInElement[k] += temp[k];
       } // end for //
       forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
@@ -737,7 +734,7 @@ void ade1e() {
 
 
   logico = false;
-  for (elementRecNber=0; elementRecNber < m; ++elementRecNber) {
+  for(elementRecNber=0; elementRecNber < m; ++elementRecNber) {
     if (nhip > 0) {
       elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
     } else {
@@ -747,7 +744,7 @@ void ade1e() {
     elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
 
     if (forcesInElement[0] != 0) {
-      for (size_t k=1; k<=elementDofs; ++k) {
+      for(auto k=one; k<=elementDofs; ++k) {
         d[k] = 0.0;
       } // end for //
 
@@ -756,14 +753,14 @@ void ade1e() {
       real *globalForces;
       dimVec(globalForces,elementDofs);
       mult4(elementRecord,forcesInElement,globalForces);
-      size_t k=(elementRecord.ji-1)*dofPerJoint;
+      auto k=(elementRecord.ji-1)*dofPerJoint;
       //cerr << k << '\n';
-      for (size_t ii=1; ii<=dofPerJoint; ++ii) {
+      for(auto ii=one; ii<=dofPerJoint; ++ii) {
         loadVector[++k] -= globalForces[ii];
       } // end for //
       k=(elementRecord.jj-1)*dofPerJoint;
       //cerr << k << '\n';
-      for (size_t ii=1; ii<=dofPerJoint; ++ii) {
+      for(auto ii=one; ii<=dofPerJoint; ++ii) {
         loadVector[++k] -= globalForces[ii+dofPerJoint];
       } // end for //
       freeVec(globalForces);

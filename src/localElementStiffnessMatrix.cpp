@@ -21,9 +21,9 @@ void localElementStiffnessMatrix(real **sm, const Element &member)
     real ct1, ct2,ct3;
     //real el2,el3;
     real eiyl2, eiyl3, eizl2, eizl3;
-    
-    for (size_t i=1; i<=elementDofs ; ++i) {
-       for (size_t j=1; j<=i ; ++j) {
+
+    for(auto i=one; i<=elementDofs ; ++i) {
+       for(auto j=one; j<=i ; ++j) {
           sm[i][j] = 0.0;
         } // end for //
      } // end for //
@@ -36,8 +36,8 @@ void localElementStiffnessMatrix(real **sm, const Element &member)
     eizl3 = eizl2 / al;
 
     sm[1][ 1]   =   el * c;
-    sm[7][ 1]   =  -el * c; 
-    sm[7][ 7]   =   el * c; 
+    sm[7][ 1]   =  -el * c;
+    sm[7][ 7]   =   el * c;
     sm[4][ 4]   =  gkl * c;
     sm[10][4]   = -gkl * c;
     sm[10][ 10] =  gkl * c;
@@ -45,12 +45,12 @@ void localElementStiffnessMatrix(real **sm, const Element &member)
     ct1 = ciz + cz;
     ct2 = cjz + cz;
     ct3 = ct1 + ct2;
-    
+
     sm[2][ 2] =  eizl3 * ct3;
     sm[6][ 2] =  eizl2 * ct1;
     sm[8][ 2] = -eizl3 * ct3;
     sm[12][ 2] = eizl2 * ct2;
-    
+
     sm[6][ 6] =   eizl  * ciz;
     sm[8][ 6] =  -eizl2 * ct1;
     sm[12][6] =   eizl  * cz;
@@ -73,9 +73,9 @@ void localElementStiffnessMatrix(real **sm, const Element &member)
     sm[9][ 9] =  eiyl3 * ct3;
     sm[11][9] =  eiyl2 * ct2;
     sm[11][ 11] = eiyl * cjy;
-    
-    for (size_t i=1; i<=elementDofs; ++i) {
-      for (size_t j=i+1; j<=elementDofs; ++j) {
+
+    for(auto i=one; i<=elementDofs; ++i) {
+      for(auto j=i+1; j<=elementDofs; ++j) {
         sm[i][j]= sm[j][i];
       } // end for //
     } // end for //

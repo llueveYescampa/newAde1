@@ -21,12 +21,12 @@ void ade1g() {
   real **conv;
   real  **factor;
   real *forcesInElement;
-  size_t ncomb;
+  auto ncomb=zero;
   //  End of local variables
 
 
   // defining the size of the record for file elementsForcesBinaryFile
-  const size_t totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
+  const auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
   dimVec(forcesInElement,0,totalNumberOfForces+1); // forcesInElement[0] takes the place of the old tlar flag
   // end of defining the size of the record for file elementsForcesBinaryFile
 
@@ -49,12 +49,12 @@ void ade1g() {
   if (nhip>0) {
     cin.ignore(1000,'\n');
     getline(cin,titleHip[0]);
-    for (size_t i=1; i<=nhip; ++i) {
-      size_t  k;
+    for(auto i=one; i<=nhip; ++i) {
+      auto k=zero;
       cin >> k >> ncomb;
       cout << setw(5) << k;
-      for (size_t j=1;j<=ncomb; ++j) {
-        size_t kk;
+      for(auto j=one;j<=ncomb; ++j) {
+        auto kk=zero;
         cin >> kk;
         if (j==1) {
           cout << setw(13);
@@ -75,30 +75,30 @@ void ade1g() {
   printElementInfo(6, lin);
 
   elementForcesRecNber=0;
-  for (size_t elementRecNber=0; elementRecNber<m; ++elementRecNber) {
+  for(auto elementRecNber=zero; elementRecNber<m; ++elementRecNber) {
     dimMat(conv,nhip,totalNumberOfForces);
-    for (size_t k =1; k<=ncas; ++k) {
+    for(auto k =one; k<=ncas; ++k) {
       elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber++,ios::beg);
       elementsForcesBinaryFile.read(reinterpret_cast<char *> (&forcesInElement[0]), sizeOfElementForcesRecord);
       // reordering  forcesInElement[] arrray for easy printing
       real *temp;
       dimVec(temp,dofPerJoint);
-      for (size_t i=1,j=dofPerJoint+1; i<=dofPerJoint; ++i,++j) {
+      for(auto i=one,j=dofPerJoint+1; i<=dofPerJoint; ++i,++j) {
         temp[i] = forcesInElement[j];
       } // end for //
 
-      for (size_t i=2*dofPerJoint+1, j=dofPerJoint+1; i<=totalNumberOfForces; ++i,++j) {
+      for(auto i=2*dofPerJoint+1, j=dofPerJoint+1; i<=totalNumberOfForces; ++i,++j) {
         forcesInElement[j] = forcesInElement[i];
       } // end for //
 
-      for (size_t i=1, j=totalNumberOfForces-dofPerJoint; i<=dofPerJoint; ++i) {
+      for(auto i=one, j=totalNumberOfForces-dofPerJoint; i<=dofPerJoint; ++i) {
         forcesInElement[++j] = temp[i];
       } // end for //
       freeVec(temp);
       // end of reordering  forcesInElement[] arrray for easy printing
 
-      for (size_t j=1; j<=nhip; ++j) {
-        for (size_t i=1; i<=totalNumberOfForces; ++i) {
+      for(auto j=one; j<=nhip; ++j) {
+        for(auto i=one; i<=totalNumberOfForces; ++i) {
           conv[j][i] += forcesInElement[i]*factor[j][k];
         } // end for //
       } // end for //
@@ -117,22 +117,22 @@ void ade1g() {
     real segment = elementRecord.length/(secctionsInsideAnElement+1);
     real position = 0.0;
     cout << setw(7) <<  elementRecNber+1 << setprecision(3) ;
-    for (size_t jj=1; jj<=secctionsInsideAnElement+2; ++jj) {
-      size_t i = (jj-1)*dofPerJoint;
+    for(auto jj=one; jj<=secctionsInsideAnElement+2; ++jj) {
+      auto i = (jj-1)*dofPerJoint;
       if (jj==1) {
         cout  << setw(8) << position;
       } else {
         cout  << setw(15)  << position;
       } // end if
       position += segment;
-      for (size_t j=1; j<=nhip; ++j) {
+      for(auto j=one; j<=nhip; ++j) {
         if (j==1) {
           cout << setw(11) << j;
         } else {
           cout << setw(26) << j;
         } // end if
 
-        for (size_t k=1; k<=dofPerJoint; ++k) {
+        for(auto k=one; k<=dofPerJoint; ++k) {
           cout << setw(12) << conv[j][++i];
         } // end for //
         i -= dofPerJoint;
@@ -156,9 +156,9 @@ void ade1g() {
   if (nhipr == 0) { // take nhipr = nhip;
     titleHip[1]="Usando las mismas combinaciones de los miembros";
     nhipr=nhip;
-    for (size_t i=1; i<=nhip; ++i) {
+    for(auto i=one; i<=nhip; ++i) {
       cout << setw(5) << i;
-      for (size_t j=1;j<=ncas; ++j) {
+      for(auto j=one;j<=ncas; ++j) {
         if (j==1) {
           cout << setw(13);
         } else {
@@ -176,12 +176,12 @@ void ade1g() {
     dimMat(factor,nhipr,ncas);
     cin.ignore(1000,'\n');
     getline(cin,titleHip[1]);
-    for (size_t i=1; i<=nhipr; ++i) {
-      size_t  k;
+    for(auto i=one; i<=nhipr; ++i) {
+      auto k = zero;
       cin >> k  >> ncomb;
       cout << setw(5) << k;
-      for (size_t j=1;j<=ncomb; ++j) {
-        size_t kk;
+      for(auto j=one;j<=ncomb; ++j) {
+        auto kk = zero;
         cin >> kk;
         cin >> factor[k][kk];
         if (j==1) {
@@ -214,12 +214,12 @@ void ade1g() {
   long sizeOfJointReactionsRecord=sizeof(real)*dofPerJoint;
   for(jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     dimMat(conv,nhipr,dofPerJoint);  // just to have a clean conv array
-    for (size_t k =1; k<=ncas; ++k) {
+    for(auto k=one; k<=ncas; ++k) {
       //cerr << "position: " << jointReactionRecNber << "   ";
       reactionsBinaryFile.seekg(sizeOfJointReactionsRecord*jointReactionRecNber++,ios::beg);
       reactionsBinaryFile.read(reinterpret_cast<char *> (jointReactionsRecord), sizeOfJointReactionsRecord);
-      for (size_t j=1; j<=nhipr; ++j) {
-        for (size_t i=0; i<dofPerJoint; ++i) {
+      for(auto j=one; j<=nhipr; ++j) {
+        for(auto i=zero; i<dofPerJoint; ++i) {
           conv[j][i+1] += jointReactionsRecord[i]*factor[j][k];
         } // end for //
       } // end for //
@@ -230,13 +230,13 @@ void ade1g() {
       printJointInfo(6, lin);
     } // end if //
     cout << setw(5) << jointRecNber+1 ;
-    for (size_t j=1; j<=nhipr; ++j) {
+    for(auto j=one; j<=nhipr; ++j) {
       if (j==1) {
         cout << setw(6) << j;
       } else {
         cout << setw(11) << j;
       } // end if //
-      for (size_t k=1; k<=dofPerJoint; ++k) {
+      for(auto k=one; k<=dofPerJoint; ++k) {
         cout << setw(12) << conv[j][k];
       } // end for //
       cout << '\n';

@@ -7,20 +7,19 @@ using std::ostream;
 using std::setw;
 
 #include "common.h"
-//void header(ostream &mycout, size_t &npag)
 void header(ostream &mycout)
-{ 
+{
   struct tm *current;
   time_t now;
   time(&now);
   current=localtime(&now);
-  
+
   if (npag != 0) {
      mycout << "\f\n";
      mycout << "                                                                         Pagina" << setw(3) << npag++ << '\n';
   } // end if //
 
-  mycout <<  "*************************************************************************\n"; 
+  mycout <<  "*************************************************************************\n";
   mycout <<  "* BLACK MOROCOIMA INGENIERIA Y PLANIFICACION       Programa ADE1        *\n";
   mycout <<  "* ANALISIS ESTATICO DE ESTRUCTURAS ESPACIALES. Version 3.1 Junio 2009   *\n";
   mycout <<  "* Programaci¢n: E.F.B.S.                                                *\n";
@@ -34,10 +33,9 @@ void header(ostream &mycout)
     mycout.fill(' ');
     lin=9;
   } else {
-     ++npag;  
+     ++npag;
   } // end if //
 } // end of function identification()
 
 //mycout << asctime(localtime(&now)) << '\n';
 //mycout << ctime(&now) << '\n';
-

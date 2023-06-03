@@ -26,19 +26,19 @@ void ade1b() {
   real vol=0.0, weight=0.0;
   //  End of local variables
 
-  
+
   header(cout);
-  
-  cout << "\nN=" << setw(3) << n     << setw(12) 
-       << "JO=" <<  setw(3) << jo    << setw(12) 
-       << "M="  <<  setw(3)  << m    << setw(12) 
-       << "NCAS=" << setw(3) << ncas << setw(12) 
-       << "NMAT=" << setw(3) << nmat << setw(12) 
-       << "NHIP=" << setw(3) << nhip << setw(12) 
+
+  cout << "\nN=" << setw(3) << n     << setw(12)
+       << "JO=" <<  setw(3) << jo    << setw(12)
+       << "M="  <<  setw(3)  << m    << setw(12)
+       << "NCAS=" << setw(3) << ncas << setw(12)
+       << "NMAT=" << setw(3) << nmat << setw(12)
+       << "NHIP=" << setw(3) << nhip << setw(12)
        << "NHIPR=" << setw(3) << ((nhipr==0) ? nhip:nhipr) << "\n\n";
   cout <<   "Propiedades de los tipos de materiales.\n";
   cout <<   "Tipo        E             G             Ct            Peso\n";
-  for(size_t i=1; i<=nmat; ++i){
+  for(auto i=1; i<=nmat; ++i){
     cout << i << setw(12) << e[i] << setw(14) << g[i] << setw(15) << ct[i] << setw(16) << pes[i] << '\n';
   } // end for //
   cout << '\n';
@@ -54,11 +54,11 @@ void ade1b() {
     } // end if //
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
-    
+
     cout << fixed;
     //cout.precision(3);
     //cout.precision(3);
-    cout << setw(5) << jointRecNber+1 
+    cout << setw(5) << jointRecNber+1
          << setw(5) << constraint[jointRecNber][0]
          << setw(5) << constraint[jointRecNber][1]
          << setw(5) << constraint[jointRecNber][2]
@@ -90,7 +90,7 @@ void ade1b() {
     elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
     elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
 
-    
+
     real eOverLength = e[elementRecord.materialType] / elementRecord.length;
     real ar = elementRecord.ar/eOverLength;
     real ay = elementRecord.ay/eOverLength;
@@ -100,11 +100,11 @@ void ade1b() {
     weight += pes[elementRecord.materialType]*elementRecord.length*ar;
     int ji = elementRecord.ji;
     int jj = elementRecord.jj;
-    
+
     if(elementRecord.iar > 0) {
       if(elementRecord.iar==1 || elementRecord.iar==3) {
         ji *= -1;
-      } // end if //   
+      } // end if //
       if(elementRecord.iar==2 || elementRecord.iar==3) {
         jj *= -1;
       } // end if //
@@ -125,36 +125,36 @@ void ade1b() {
          << setw(7) << elementRecord.stiffnessData[2]
          << setw(7) << elementRecord.stiffnessData[3]
          << setw(5) << elementRecord.materialType;
-         
-         
+
+
     if(elementRecord.bz > 0) {
-      cout << setw(8) << elementRecord.bz; 
+      cout << setw(8) << elementRecord.bz;
     } // end if//
     if(elementRecord.by > 0) {
       cout << setw(7) << elementRecord.by;
     } // end if//
-    cout << '\n';   
-    
-    /*        
+    cout << '\n';
+
+    /*
               if(elementRecord.bz > 0) {
-              cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n'; 
+              cout << setw(8) << elementRecord.bz << setw(7) << elementRecord.by << '\n';
               } else {
-              cout << '\n';   
-              } // end if //         
-    */    
-    
+              cout << '\n';
+              } // end if //
+    */
+
     ++lin;
   } // end for //
   real meanBW=0.0;
   // Calculo de la media-banda promedio
-  for (size_t i = 1; i <= nec; ++i) {
+  for(posInt i = 1; i <= nec; ++i) {
     meanBW += (i-leftCol[i]);
   } // endfor //
   meanBW += nec;
   meanBW /= nec;
   // end of Calculo de la media-banda promedio
-  
-  
+
+
   //cout.precision(3);
   cout << setprecision (3) <<"\nVolumen = " << setw(6) << vol << setw(30) << "Peso =" << setw(6) << weight << setw(40) << "Mean BandWidth: " << meanBW << "\n\n";
   lin += 3;

@@ -16,7 +16,7 @@ using std::ios;
 void ade1c() {
   //  Local Variables
   real **sm;
-  size_t *destinationVector;
+  posInt *destinationVector;
   //  End of local variables
 
   //  Creating the global stiffness ragged matrix
@@ -32,9 +32,9 @@ void ade1c() {
     globalElementStiffnessMatrix(sm, elementRecord);
 
     // creating the destination Vector
-    size_t ji = (elementRecord.ji-1)*dofPerJoint;
-    size_t jj = (elementRecord.jj-1)*dofPerJoint;
-    for (size_t i=1; i<=dofPerJoint; ++i){
+    auto ji = (elementRecord.ji-1)*dofPerJoint;
+    auto jj = (elementRecord.jj-1)*dofPerJoint;
+    for(auto i=one; i<=dofPerJoint; ++i){
       destinationVector[i] = ++ji;
       if (constraint[elementRecord.ji-1][i-1] == true) {
         destinationVector[i] = 0;
@@ -46,11 +46,11 @@ void ade1c() {
       } // end if
     } // end for //
     // assembling the global stiffness matrix\n
-    for (size_t i=1; i<=elementDofs; ++i) {
-      size_t row = destinationVector[i];
+    for(auto i=one; i<=elementDofs; ++i) {
+      auto row = destinationVector[i];
       if (row > 0) {
-        for (size_t j=1; j<=i; ++j) {
-          size_t col = destinationVector[j];
+        for(auto j=one; j<=i; ++j) {
+          auto col = destinationVector[j];
           if (col > 0) {
             if (row >= col) {
               s[row][col] += sm[i][j];
@@ -64,13 +64,13 @@ void ade1c() {
   } // end for //
 
   // imposing boundary conditions on global stffness matrix
-  for (jointRecNber=0; jointRecNber<n; ++jointRecNber) {
+  for(jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
 
     if (jointRecord.areThereSprings == true) {
-      size_t row = (jointRecNber)*dofPerJoint + 1;
-      for (size_t k=0; k < dofPerJoint; ++k,++row) {
+      auto row = (jointRecNber)*dofPerJoint + 1;
+      for(auto k=zero; k < dofPerJoint; ++k,++row) {
         s[row][row] += jointRecord.springsConstants[k];
       } // end for //
     } // end if //
@@ -78,9 +78,9 @@ void ade1c() {
 
 
 
-  for (size_t row=1; row<=nec; ++row) {
+  for(auto row=one; row<=nec; ++row) {
     if (s[row][row] == 0) {
-      size_t col = leftCol[row];
+      auto col = leftCol[row];
       while ((col<row) and (s[row][col] == 0.0)) {
         ++ col;
       } // end for //

@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 
   //  Local Variables
   clock_t start;
-  double tiempo=0.0;
 
   int mm;
   //  End of local variables
@@ -58,7 +57,7 @@ int main(int argc, char *argv[])
   fileName[3] = fileName[0] + ".rfs";
   fileName[0] += ".jnt";
   // end of assigning file names
-    
+
   jointsBinaryFile.open(fileName[0].c_str(),  ios::in | ios::out | ios::trunc | ios::binary);
   if (!jointsBinaryFile) {
     cerr << "File " <<  fileName[0] << " could not be opened.\n";
@@ -107,14 +106,15 @@ int main(int argc, char *argv[])
   dimVec(leftCol,nec);
   //  End of dynamic allocation of global (common) arrays
 
-  for (size_t j,i=1; i<= nmat; ++i) {
+  for(auto i=1; i<= nmat; ++i) {
+    posInt j;
     cin >> j;
     cin >> e[j] >> g[j] >> ct[j] >> pes [j];
   } // end for //
 
   titleHip  = new string [2];
   cerr << "End of Part ade1 \n";
-    
+
   ade1a();
   ade1b();
   if (!reviewData) {
@@ -127,18 +127,18 @@ int main(int argc, char *argv[])
       ade1f();
     } // end if //
   } // end while //
-    
+
   if (nhip > 0 and !reviewData) {
     ade1g();
   } // end if //
 
     //freeVec(w);
-  freeMat(constraint,0,0);    
+  freeMat(constraint,0,0);
   freeVec(e);
   freeVec(g);
   freeVec(ct);
   freeVec(pes);
-    
+
   cout << fixed << setprecision(2)
        << "Time running " << static_cast<double>(clock() - start) / CLOCKS_PER_SEC
        <<  "  sec. \n";

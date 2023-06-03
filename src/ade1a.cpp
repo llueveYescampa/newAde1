@@ -27,32 +27,31 @@ inline real cube(real s) {return (s)*(s)*(s);}
 void ade1a() {
 
   //  Local Variables
-  size_t *gdof;
-  const size_t ndf2 = 2*(dofPerJoint);
+  posInt *gdof;
   real z1,z2; // segmentos de rigidez infinita
   bool isThereAPointP;
   real xp,yp,zp;
-  real ara,axa,aya,aza,bza,bya;
-  real fy,fz,fya,fza;
+  real ara=0.0,axa=0.0,aya=0.0,aza=0.0,bza=0.0,bya=0.0;
+  real fy,fz,fya=0.0,fza=0.0;
   //  End of local variables
-  
+
 
   //  Dynamic allocation of local arrays
-  dimVec(gdof,ndf2);
+  dimVec(gdof,elementDofs);
   //  End of dynamic allocation of local arrays
 
-  for (size_t i=1; i<=nec ;++i ) { // inizializing left column //
+  for(auto i=one; i<=nec ;++i ) { // inizializing left column //
     leftCol[i] = i;
   } // endfor //
 
-  for (size_t i=0; i<dofPerJoint ;++i ) { // inizializing the joint load //
+  for(auto i=zero; i<dofPerJoint ;++i ) { // inizializing the joint load //
     jointRecord.load[i]  = 0.0;
     jointRecord.jointDispl[i] = 0.0;
   } // endfor //
 
 
     // This correction is done just all the joints.
-  for(size_t i=0;i<n;++i) {
+  for(auto i=zero;i<n;++i) {
     if (itipo == 1) {
       constraint[i][2]=true;
       constraint[i][3]=true;
@@ -64,22 +63,22 @@ void ade1a() {
     } // end if //
   } // end for //
 
-  for(size_t i=1; i<=n ; ++i) {
-    cin >> jointRecNber >> jointRecord.x >> jointRecord.y >> jointRecord.z; 
+  for(auto i=one; i<=n ; ++i) {
+    cin >> jointRecNber >> jointRecord.x >> jointRecord.y >> jointRecord.z;
     --jointRecNber;
     jointsBinaryFile.seekp(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.write(reinterpret_cast<const char *> (&jointRecord), sizeOfJointRecord);
   } // end for //
 
 
-  for(size_t i=1;i<=jo;++i) {
+  for(auto i=one;i<=jo;++i) {
     jointRecord.areThereSprings=false;
     jointRecord.areThereRestrictions=false;
-    cin >> jointRecNber; 
+    cin >> jointRecNber;
     --jointRecNber;
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
-    for(size_t k = 0; k < dofPerJoint; ++k){
+    for(auto k = zero; k < dofPerJoint; ++k){
       cin >> constraint[jointRecNber][k];
     } // end for//
 
@@ -96,7 +95,7 @@ void ade1a() {
       constraint[jointRecNber][5]=true;
     } // end if
 
-    for(size_t k = 0; k < dofPerJoint; ++k) {
+    for(auto k = zero; k < dofPerJoint; ++k) {
       cin >> jointRecord.springsConstants[k];
       if (jointRecord.springsConstants[k] > 0.0) {
         jointRecord.areThereSprings=true;
@@ -110,8 +109,8 @@ void ade1a() {
     jointsBinaryFile.write(reinterpret_cast< const char *> (&jointRecord), sizeOfJointRecord);
   } // end for//
 
-  for(size_t j=1; j<=m; ++j) {
-    int ii, ji,jj; 
+  for(auto j=one; j<=m; ++j) {
+    int ii, ji,jj;
     cin >> ii >> ji >> jj >> elementRecord.materialType
         >> elementRecord.ar >> elementRecord.ax >> elementRecord.ay >> elementRecord.az
         >> z1 >> z2;
@@ -130,38 +129,36 @@ void ade1a() {
     elementRecord.ji =  abs(ji);
     elementRecord.jj =  abs(jj);
     //       Calculo de leftColumn
-    for (size_t k=1; k <= dofPerJoint; ++k) {
+    for(auto k=one; k <= dofPerJoint; ++k) {
       gdof[k] = (elementRecord.ji-1)*dofPerJoint + k;
       if (constraint[elementRecord.ji-1][k-1] == true) {
-        gdof[k] = 0;      
-      } // end if     
+        gdof[k] = 0;
+      } // end if
     } // endfor //
-    
-    for (size_t k=dofPerJoint+1; k <= ndf2; ++k) {
+
+    for(auto k=dofPerJoint+1; k <= elementDofs; ++k) {
       gdof[k]= (elementRecord.jj-2)*dofPerJoint + k;
       if (constraint[elementRecord.jj-1][k-dofPerJoint-1] == true) {
-        gdof[k] = 0;      
-      } // end if 
+        gdof[k] = 0;
+      } // end if
     } // endfor //
-    
+
     if (elementRecord.iar==3 and itipo == 1) { // this is a 2d Truss element
       gdof[dofPerJoint] = 0;
-      gdof[ndf2] = 0;
+      gdof[elementDofs] = 0;
     } // end if //
-        
-        
-    size_t row, col;
-        
-    for (size_t k=1; k <= ndf2; ++k) {
+
+    for(auto k=one; k <= elementDofs; ++k) {
       if(gdof[k] > 0) {
-        for (size_t l=k+1; l <= ndf2; ++l) {
+        for(auto l=k+1; l <= elementDofs; ++l) {
           if(gdof[l] > 0) {
-            if ( gdof[k] > gdof[l]  ) {
+            auto row = gdof[l];
+            auto col = gdof[k];
+
+            //if ( gdof[k] > gdof[l]  ) {
+            if ( col > row  ) {
               row = gdof[k];
               col = gdof[l];
-            } else {
-              row = gdof[l];
-              col = gdof[k];
             } // endif //
             if ( col < leftCol[row] ) {
               leftCol[row]= col;
@@ -175,7 +172,7 @@ void ade1a() {
     if (elementRecord.materialType == 0) {
       elementRecord.materialType = 1;
     } // end if //
-    
+
     if ( ii < 0) {   // negative ii mean : there is a P point
       elementRecNber = -(ii+1);
       isThereAPointP=true;
@@ -281,7 +278,7 @@ void ade1a() {
     real q = (cx * cx) + (cz * cz);
 
     if (q < .001) {  // Vertical members
-      for(size_t k=0; k<9;++k){
+      for(auto k=zero; k<9;++k){
         elementRecord.r[k] = 0.0;
       } // end for//
       elementRecord.r[1] = cy;
@@ -363,7 +360,7 @@ void ade1a() {
     elementRecord.stiffnessData[6] /=  elementRecord.stiffnessData[3];
 
     elementRecord.stiffnessData[3] = 1 / z3;
-        
+
     if (elementRecord.iar == 1) {
       elementRecord.stiffnessData[5] -= sqrval(elementRecord.stiffnessData[6])/ elementRecord.stiffnessData[4];
       elementRecord.stiffnessData[4] = 0;
@@ -385,7 +382,7 @@ void ade1a() {
       elementRecord.stiffnessData[4] = 0;
       elementRecord.stiffnessData[5] = 0;
       elementRecord.stiffnessData[6] = 0;
-      elementRecord.ax = 0.0; 
+      elementRecord.ax = 0.0;
     } // end if //
 
     real a = e[elementRecord.materialType] / elementRecord.length;

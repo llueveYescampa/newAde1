@@ -36,7 +36,7 @@ void ade1f() {
   } // end if //
 
   // defining the size of the record for file elementsForcesBinaryFile
-  const size_t totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
+  const auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
   dimVec(forcesInElement,0,totalNumberOfForces+1); // forcesInElement[0] takes the place of the old tlar flag
   // end of defining the size of the record for file elementsForcesBinaryFile
 
@@ -50,15 +50,15 @@ void ade1f() {
   //    impose boundary conditions on global load Vector
 
   jointRecNber=0;
-  size_t countingConstraints=0;
+  auto countingConstraints=zero;
   do  {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast< char *> (&jointRecord), sizeOfJointRecord);
 
     if (jointRecord.areThereRestrictions == true ) {
       ++countingConstraints;
-      size_t row = (jointRecNber)*dofPerJoint + 1;
-      for (size_t k=0; k < dofPerJoint; ++k,++row) {
+      auto row = (jointRecNber)*dofPerJoint + 1;
+      for(auto k=zero; k < dofPerJoint; ++k,++row) {
         if (constraint[jointRecNber][k] ) {
           loadVector[row]= 0.0;
         } // end if //
@@ -92,9 +92,9 @@ void ade1f() {
   for(jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-    size_t row = jointRecNber*dofPerJoint + 1;
+    auto row = jointRecNber*dofPerJoint + 1;
     cout << setw(5) << jointRecNber+1 << setprecision(6);
-    for (size_t j=0; j<dofPerJoint; ++j) {
+    for(auto j=zero; j<dofPerJoint; ++j) {
       if (lin > 56) {
         header(cout);
         cout << titleCase[icas] << "\n\n";
@@ -135,9 +135,9 @@ void ade1f() {
 
 
     // selecting global disp related to joints i and j in this element
-    size_t k =  (elementRecord.ji-1)*dofPerJoint;
-    size_t kk = (elementRecord.jj-1)*dofPerJoint;
-    for (size_t i=1; i<=dofPerJoint; ++i) {
+    auto k =  (elementRecord.ji-1)*dofPerJoint;
+    auto kk = (elementRecord.jj-1)*dofPerJoint;
+    for(auto i=one; i<=dofPerJoint; ++i) {
       d[i] = loadVector[++k] ;
       d[i+dofPerJoint] = loadVector[++kk] ;
     } // end for //
@@ -157,12 +157,12 @@ void ade1f() {
     } else {
       elementForcesRecNber=elementRecNber;
     } // end if //
-    for (size_t i=13; i<=totalNumberOfForces; ++i) {
+    for(auto i=one*13; i<=totalNumberOfForces; ++i) {
       d[i] = 0.0;
     } // end for //
     elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
     elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
-    for (size_t i=1; i<=totalNumberOfForces; ++i) {
+    for(auto i=one; i<=totalNumberOfForces; ++i) {
       d[i] += forcesInElement[i];
     } // end for //
     d[1]  *= -1;
@@ -172,7 +172,7 @@ void ade1f() {
     d[9]  *= -1;
     d[11] *= -1;
     real segment = elementRecord.length/(secctionsInsideAnElement+1);
-    for (size_t i=12, ii=1; ii<=secctionsInsideAnElement; ++ii) {
+    for(auto i=one*12, ii=one; ii<=secctionsInsideAnElement; ++ii) {
       d[++i] += d[1];
       d[++i] += d[2];
       d[++i] += d[3];
@@ -182,16 +182,16 @@ void ade1f() {
     } // end for //
 
     cout << fixed <<setw(7) << elementRecNber+1 << setw(6) << elementRecord.ji << setw(8) << setprecision(3) << 0.0;
-    for (size_t i=1; i<=dofPerJoint; ++i) {
+    for(auto i=one; i<=dofPerJoint; ++i) {
       cout << setw(11) << d[i];
     } // end for //
     cout << '\n';
     ++lin;
     if (secctionsInsideAnElement > 0) {
-      size_t kk = 12;
-      for (size_t k=1; k<=secctionsInsideAnElement; ++k) {
+      auto kk = one * 12;
+      for(auto k=one; k<=secctionsInsideAnElement; ++k) {
         cout << setw(21) << segment*k;
-        for (size_t i=1; i<=dofPerJoint; ++i) {
+        for(auto i=one; i<=dofPerJoint; ++i) {
           cout <<  setw(11) << d[++kk];
         } // end for //
         cout << '\n';
@@ -199,12 +199,12 @@ void ade1f() {
       lin += secctionsInsideAnElement;
     } // end if //
     cout << setw(13) << elementRecord.jj << setw(8)  << elementRecord.length;
-    for (size_t i=dofPerJoint+1; i<=2*dofPerJoint; ++i) {
+    for(auto i=dofPerJoint+1; i<=2*dofPerJoint; ++i) {
       cout << setw(11) << d[i];
     } // end for //
     cout << '\n';
     ++lin;
-    for (size_t i=1; i<=totalNumberOfForces; ++i) {
+    for(auto i=one; i<=totalNumberOfForces; ++i) {
       forcesInElement[i]=d[i];
     } // end for //
     elementsForcesBinaryFile.seekp(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
@@ -213,7 +213,7 @@ void ade1f() {
   cout << '\n';
   ++lin;
   // Calculo de las reacciones
-  for (size_t i=1; i<=nec; ++i) {
+  for(auto i=one; i<=nec; ++i) {
     loadVector[i] = 0.0;
   } // end for //
   for(elementRecNber=0; elementRecNber<m; ++elementRecNber) {
@@ -238,9 +238,9 @@ void ade1f() {
     // now d has the reactions in global coordinates
 
     // selecting global disp related to joints i and j in this element
-    size_t k=(elementRecord.ji-1)*dofPerJoint;
-    size_t kk=(elementRecord.jj-1)*dofPerJoint;
-    for (size_t i=1; i<=dofPerJoint; ++i) {
+    auto k=(elementRecord.ji-1)*dofPerJoint;
+    auto kk=(elementRecord.jj-1)*dofPerJoint;
+    for(auto i=one; i<=dofPerJoint; ++i) {
       loadVector[++k]  += d[i];
       loadVector[++kk] += d[i+dofPerJoint];
     } // end for //
@@ -260,12 +260,12 @@ void ade1f() {
   real *jointReactionsRecord;
   jointReactionsRecord = new real [dofPerJoint];
   long sizeOfJointReactionsRecord=sizeof(real)*dofPerJoint;
-  size_t k = 0;
+  auto k = zero;
   jointReactionRecNber= static_cast<long>(icas-1);
   for(jointRecNber=0; jointRecNber<n; ++jointRecNber) {
     jointsBinaryFile.seekg(sizeOfJointRecord*jointRecNber,ios::beg);
     jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
-    for (size_t i=0; i<dofPerJoint; ++i) {
+    for(auto i=zero; i<dofPerJoint; ++i) {
       loadVector[++k] += jointRecord.load[i];
       jointReactionsRecord[i] = loadVector[k];
       jointRecord.load[i] = 0.0;
@@ -286,7 +286,7 @@ void ade1f() {
   } // end if //
   printJointInfo(5,lin);
   k = 0;
-  for (size_t i=1; i<=n; ++i ) {
+  for(auto i=one; i<=n; ++i ) {
     if (lin > 56) {
       header(cout);
       cout << titleCase[icas] << "\n\n";
@@ -294,7 +294,7 @@ void ade1f() {
       printJointInfo(5,lin);
     } // end if //
     cout << setw(5) << i << setprecision(4);
-    for (size_t j=1; j<=dofPerJoint; ++j) {
+    for(auto j=one; j<=dofPerJoint; ++j) {
       cout << setw(12) << loadVector[++k];
     } // end for //
     cout << '\n';
