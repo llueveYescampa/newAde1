@@ -351,14 +351,8 @@ void ade1e() {
 
         for(auto kk=one*12, l=one; l<=secctionsInsideAnElement; ++l) {
           real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-          real ax,Vy,Vz,amy,amz;
-          if (xi < a) {
-            ax = 0.0;
-            Vy = 0.0;
-            Vz = 0.0;
-            amy = 0.0;
-            amz = 0.0;
-          } else if (xi >= a) {
+          real ax=0.0,Vy=0.0,Vz=0.0,amy=0.0,amz=0.0;
+          if (xi >= a) {
             ax = -Px;
             Vy = Py;
             Vz = Pz;
@@ -651,10 +645,8 @@ void ade1e() {
 
         for(auto kk=one*16, l=one; l<=secctionsInsideAnElement; ++l) {
           real xi = l * elementRecord.length / (secctionsInsideAnElement+1);
-          real par;
-          if (xi < a) {
-            par = 0.0;
-          } else if(xi >= a and xi <= (a + b)) {
+          real par = 0.0;
+          if(xi >= a and xi <= (a + b)) {
             par = -(xi - a) * Px;
           } else if(xi > (a + b)) {
             par = -Px * b;
