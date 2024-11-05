@@ -15,6 +15,7 @@ using std::scientific;
 using std::uppercase;
 
 #include "common.h"
+#include "language.h"
 #include "constraint.h"
 #include "prototyp.h"
 #include "joint.h"
@@ -36,8 +37,17 @@ void ade1b() {
        << "NMAT=" << setw(3) << nmat << setw(12)
        << "NHIP=" << setw(3) << nhip << setw(12)
        << "NHIPR=" << setw(3) << ((nhipr==0) ? nhip:nhipr) << "\n\n";
+       
+#ifdef ENGLISH
+  cout <<   "Properties of the material types.\n";
+  cout <<   "Type        E             G             Ct          Weight\n";
+#endif  
+
+#ifdef ESPANOL  
   cout <<   "Propiedades de los tipos de materiales.\n";
   cout <<   "Tipo        E             G             Ct            Peso\n";
+#endif  
+  
   for(auto i=1; i<=nmat; ++i){
     cout << i << setw(12) << e[i] << setw(14) << g[i] << setw(15) << ct[i] << setw(16) << pes[i] << '\n';
   } // end for //
@@ -156,7 +166,13 @@ void ade1b() {
 
 
   //cout.precision(3);
-  cout << setprecision (3) <<"\nVolumen = " << setw(6) << vol << setw(30) << "Peso =" << setw(6) << weight << setw(40) << "Mean BandWidth: " << meanBW << "\n\n";
+#ifdef ENGLISH  
+  cout << setprecision (3) <<"\nVolume  = " << setw(6) << vol << setw(30) << "Weight=" << setw(6) << weight << setw(40) << "Mean BandWidth: " << meanBW << "\n\n";
+#endif  
+#ifdef ESPANOL  
+  cout << setprecision (3) <<"\nVolumen = " << setw(6) << vol << setw(30) << "Peso =" << setw(6) << weight << setw(40) << "Ancho de banda promedio: " << meanBW << "\n\n";
+#endif  
+
   lin += 3;
   cerr << "End of Part ade1b \n";
 } // end of ade1b() //

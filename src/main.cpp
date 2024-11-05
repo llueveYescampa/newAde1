@@ -64,12 +64,6 @@ int main(int argc, char *argv[])
   fileName[2] = fileName[0] + ".efs";
   fileName[3] = fileName[0] + ".rfs";
   fileName[0] += ".jnt";
-  
-  cout << fileName[0] << '\n';
-  cout << fileName[1] << '\n';
-  cout << fileName[2] << '\n';
-  cout << fileName[3] << '\n'; //exit(0);
-  
   // end of assigning file names
 
   jointsBinaryFile.open(fileName[0].c_str(),  ios::in | ios::out | ios::trunc | ios::binary);
@@ -142,7 +136,6 @@ int main(int argc, char *argv[])
       ade1f();
     } // end if //
   } // end while //
-
   if (nhip > 0 and !reviewData) {
     ade1g();
   } // end if //
@@ -166,5 +159,7 @@ int main(int argc, char *argv[])
   cout << fixed << setprecision(2)
        << "Time running " << elapsed_time*1.0e-9 
        <<  "  sec. \n";
+  file2std(cout,myStdOut);
+  cout << "Bye...\n";
   return (0);
 }// end of main
