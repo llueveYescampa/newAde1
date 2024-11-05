@@ -18,6 +18,9 @@ using std::setprecision;
 #include <cstring>
 using std::string;
 
+#include <filesystem>
+using std::filesystem::path;
+using std::filesystem::remove;
 
 #include "newade1.h"
 #include "prototyp.h"
@@ -47,15 +50,23 @@ int main(int argc, char *argv[])
       std2file(cout,outfile);
     } // endif //
   } // endif //
+  path p = argv[1];
     //    cin.clear();
 
     // assigning file names
   fileName = new string[4];
-  fileName[0] = strtok(argv[1],".");
+  //fileName[0] = strtok(argv[1],".");
+  fileName[0] = p.replace_extension();
   fileName[1] = fileName[0] + ".elm";
   fileName[2] = fileName[0] + ".efs";
   fileName[3] = fileName[0] + ".rfs";
   fileName[0] += ".jnt";
+  
+  cout << fileName[0] << '\n';
+  cout << fileName[1] << '\n';
+  cout << fileName[2] << '\n';
+  cout << fileName[3] << '\n'; //exit(0);
+  
   // end of assigning file names
 
   jointsBinaryFile.open(fileName[0].c_str(),  ios::in | ios::out | ios::trunc | ios::binary);
@@ -138,6 +149,12 @@ int main(int argc, char *argv[])
   freeVec(g);
   freeVec(ct);
   freeVec(pes);
+  
+  // removing auxiliary files
+  for (int i=0; i<4; ++i) {
+      remove(fileName[i]);  
+  } // end for //
+  // end of removing auxiliary files
 
   cout << fixed << setprecision(2)
        << "Time running " << static_cast<double>(clock() - start) / CLOCKS_PER_SEC
