@@ -2,7 +2,9 @@
 #include "element.h"
 //
 // for the multipication d = R * D
-void mult3(const Element &member, real *d,  real *w)
+void mult3(const Element &member, 
+           const real *__restrict const d,
+                 real *__restrict const w)
 {
   for(posInt l=0; l < elementDofs; l+=3) {
     for(posInt k=0, i=1; i<=3; ++i ) {

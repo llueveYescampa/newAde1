@@ -3,7 +3,10 @@
 #include <numeric>
 using std::inner_product;
 
-void mult5(real **a, const real  *b, real *c, const posInt &rows)
+void mult5(      real **a, 
+           const real  *__restrict const b, 
+                 real *__restrict const c, 
+                 const posInt &rows)
 {
   // for full a matrix
   for(posInt i=1; i<=rows ; ++i) {

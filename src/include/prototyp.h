@@ -23,8 +23,8 @@
 
   //void mult1(real **sm, const Element &member,  real **sa);
   //void mult2(const Element &member, real **sa, real **sm);
-  void mult3(const Element &member, real *d,  real *w);
-  void mult4(const Element &member, real *d,  real *w);
-  void mult5(real **sm, const real *d,  real *w, const posInt &rows);
+  void mult3(const Element &member, const real *__restrict const d,  real *__restrict const w);
+  void mult4(const Element &member, const real *__restrict const d,  real *__restrict const w);
+  void mult5(real **sm, const real *__restrict const d,  real *__restrict const w, const posInt &rows);
 
 #endif // End of prototyp_h
