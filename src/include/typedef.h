@@ -1,7 +1,7 @@
 #ifndef TYPEDEF
 #define TYPEDEF
-  typedef double real;
-  typedef unsigned int posInt;
-  const posInt zero = 0;
-  const posInt one  = 1;
+    using real = double;
+    using posInt = unsigned int; 
+    constexpr posInt zero = 0;
+    constexpr posInt one  = 1;
 #endif
