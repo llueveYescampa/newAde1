@@ -22,6 +22,10 @@ using std::string;
 using std::filesystem::path;
 using std::filesystem::remove;
 
+#include <chrono>
+using ns = std::chrono::nanoseconds;
+
+
 #include "newade1.h"
 #include "prototyp.h"
 
@@ -29,7 +33,6 @@ int main(int argc, char *argv[])
 {
 
   //  Local Variables
-  clock_t start;
 
   int mm;
   //  End of local variables
@@ -86,7 +89,8 @@ int main(int argc, char *argv[])
   // R e a d i n g    t h e    i n p u t    d a t a    h e r e
   getline(cin,title);
   header(cerr);
-  start = clock();
+  //start = clock();
+  auto start = std::chrono::steady_clock::now();
 
   cin >> n >> jo >>  mm >> ncas >> nmat >> nhip >> nhipr >> itipo >> reviewData;
   if (nmat < 0) { // consider shear deff. if the number o materials is negative
@@ -156,8 +160,11 @@ int main(int argc, char *argv[])
   } // end for //
   // end of removing auxiliary files
 
+  auto duration = std::chrono::steady_clock::now() - start;
+  auto elapsed_time = std::chrono::duration_cast<ns>(duration).count();
+
   cout << fixed << setprecision(2)
-       << "Time running " << static_cast<double>(clock() - start) / CLOCKS_PER_SEC
+       << "Time running " << elapsed_time*1.0e-9 
        <<  "  sec. \n";
   return (0);
 }// end of main
