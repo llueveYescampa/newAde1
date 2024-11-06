@@ -27,7 +27,7 @@ void header(ostream &mycout)
   mycout <<  "*************************************************************************\n";
   mycout <<  "* BLACK MOROCOIMA ENGINEERING AND PLANNING        Program newAde1       *\n";
   mycout <<  "* STATIC ANALYSIS OF SPATIAL STRUCTURES        Version 3.1 Junio 2009   *\n";
-  mycout <<  "* Programing: E.F.B.S.                                                  *\n";
+  mycout <<  "* Programming: E.F.B.S.                                                 *\n";
   mycout <<  "*************************************************************************\n";
 
   if (npag != 0) {
