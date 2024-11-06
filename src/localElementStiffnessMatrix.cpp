@@ -24,7 +24,7 @@ void localElementStiffnessMatrix(real **sm, const Element &member)
 
     for(auto i=one; i<=elementDofs ; ++i) {
        for(auto j=one; j<=i ; ++j) {
-          sm[i][j] = 0.0;
+          sm[i][j] = static_cast<real>(0.0);
         } // end for //
      } // end for //
 
