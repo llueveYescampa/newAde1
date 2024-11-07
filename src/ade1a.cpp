@@ -16,6 +16,7 @@ using std::setw;
 using std::fixed;
 using std::setprecision;
 
+#include "language.h"
 #include "common.h"
 #include "constraint.h"
 #include "joint.h"
@@ -242,8 +243,14 @@ void ade1a() {
 
 
     if (elementRecord.ji >= elementRecord.jj) {
+#ifdef ENGLISH
+      cout << "ERROR JI >= JJ IN ELEMENT: " << setw(6) << elementRecNber+1 << '\n';
+      cerr << "ERROR JI >= JJ IN ELEMENT: " << setw(6) << elementRecNber+1 << '\n';
+#endif  
+#ifdef ESPANOL  
       cout << "ERROR JI >= JJ EN EL MIEMBRO:" << setw(6) << elementRecNber+1 << '\n';
       cerr << "ERROR JI >= JJ EN EL MIEMBRO:" << setw(6) << elementRecNber+1 << '\n';
+#endif  
       reviewData = true; // from now on only check input data
     } // end if //
 

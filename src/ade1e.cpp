@@ -12,6 +12,7 @@ using std::setprecision;
 
 #include <cmath>
 
+#include "language.h"
 #include "common.h"
 #include "prototyp.h"
 #include "joint.h"
@@ -145,10 +146,19 @@ void ade1e() {
         dty1 = dty;
         dtz1 = dtz;
       } // end if //
+#ifdef ENGLISH
+      cout << "Element" << setw(6) <<  elementRecNber+1
+           << "         DTX =" << setw(9) << setprecision(3) << ato1
+           << " DTY ="  << setw(8) << setprecision(3) << dty
+           << " DTZ ="  << setw(8) << setprecision(3) << dtz << '\n';
+#endif  
+#ifdef ESPANOL  
       cout << "Miembro" << setw(6) <<  elementRecNber+1
            << "        ATO1 =" << setw(9) << setprecision(3) << ato1
            << " DTY="  << setw(9) << setprecision(3) << dty
            << " DTZ="   << setw(9) << setprecision(3) << dtz << '\n';
+#endif  
+      
       ++lin;
       elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
       elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);

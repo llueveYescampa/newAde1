@@ -10,6 +10,7 @@ using std::setprecision;
 
 #include <cmath>
 
+#include "language.h"
 #include "common.h"
 #include "prototyp.h"
 #include "joint.h"
@@ -41,14 +42,20 @@ void ade1g() {
   dimMat(factor,nhip,ncas);
 
   header(cout);
-  cout << '\n';
-  cout << titleHip[0];
-  cout << "\nHipotesis  Caso de Carga  Factor\n";
-  lin+=3;
-
+  
   if (nhip>0) {
     cin.ignore(1000,'\n');
     getline(cin,titleHip[0]);
+    cout << '\n';  
+    cout << titleHip[0];    
+#ifdef ENGLISH
+    cout << "\nHypothesis   Load Case    Factor\n";
+#endif  
+#ifdef ESPANOL  
+    cout << "\nHipotesis  Caso de Carga  Factor\n";
+#endif      
+    lin+=3;
+    
     for(auto i=one; i<=nhip; ++i) {
       auto k=zero;
       cin >> k >> ncomb;
@@ -147,15 +154,26 @@ void ade1g() {
   elementsForcesBinaryFile.close();
 
   header(cout);
-  cout << '\n';
-  cout << titleHip[1];
-  cout << "\nHipotesis  Caso de Carga  Factor\n";
-  lin+=3;
 
 
   if (nhipr == 0) { // take nhipr = nhip;
-    titleHip[1]="Usando las mismas combinaciones de los miembros";
+#ifdef ENGLISH
+    titleHip[1]="Using the same combinations of the elements";
+#endif  
+#ifdef ESPANOL  
+    titleHip[1]="Usando las mismas combinaciones de los miembros";    
+#endif  
     nhipr=nhip;
+    cout << '\n';
+    cout << titleHip[1];
+#ifdef ENGLISH
+    cout << "\nHypothesis   Load Case    Factor\n";
+#endif  
+#ifdef ESPANOL  
+    cout << "\nHipotesis  Caso de Carga  Factor\n";
+#endif  
+    lin+=3;
+    
     for(auto i=one; i<=nhip; ++i) {
       cout << setw(5) << i;
       for(auto j=one;j<=ncas; ++j) {
@@ -176,6 +194,16 @@ void ade1g() {
     dimMat(factor,nhipr,ncas);
     cin.ignore(1000,'\n');
     getline(cin,titleHip[1]);
+    cout << '\n';
+    cout << titleHip[1];
+#ifdef ENGLISH
+    cout << "\nHypothesis   Load Case    Factor\n";
+#endif  
+#ifdef ESPANOL  
+    cout << "\nHipotesis  Caso de Carga  Factor\n";
+#endif  
+    lin+=3;
+    
     for(auto i=one; i<=nhipr; ++i) {
       auto k = zero;
       cin >> k  >> ncomb;

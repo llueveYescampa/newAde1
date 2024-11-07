@@ -9,13 +9,12 @@ using std::setw;
 using std::setprecision;
 using std::fixed;
 
-
+#include "language.h"
 #include "common.h"
 #include "constraint.h"
 #include "prototyp.h"
 #include "joint.h"
 #include "element.h"
-
 
 
 void ade1d() {
@@ -66,10 +65,21 @@ void ade1d() {
 
   cin >> njc >> nma >> nmc >> ato;
 
-  cout << fixed <<"NJC = " << setw(4) << njc << setw(8)
+#ifdef ENGLISH
+  cout << fixed 
+       << "NNL = " << setw(4) << njc << setw(8)
+       << "NSD = " << setw(4) << nma << setw(8)
+       << "NEL = " << setw(4) << nmc << setw(8)
+       << "GDT = " << setw(6) << setprecision (3) << ato << "\n\n";
+#endif  
+#ifdef ESPANOL  
+  cout << fixed 
+       << "NJC = " << setw(4) << njc << setw(8)
        << "NMA = " << setw(4) << nma << setw(8)
        << "NMC = " << setw(4) << nmc << setw(8)
        << "ATO = " << setw(6) << setprecision (3) << ato << "\n\n";
+#endif  
+       
   lin +=2;
   forcesInElement[0] = static_cast<real>(false); // redundant because was created as 0
 
@@ -159,10 +169,18 @@ void ade1d() {
       jointsBinaryFile.read(reinterpret_cast<char *> (&jointRecord), sizeOfJointRecord);
 
       if (jointRecord.areThereRestrictions == false) {
+#ifdef ENGLISH
+        cerr << "ERROR. Support displacement at unrestricted node.\n";
+        cerr << "Please, chech node: " << j << '\n';
+        cout << "ERROR. Support displacement at unrestricted node.\n";
+        cout << "Please, chech node: " << j << '\n';
+#endif  
+#ifdef ESPANOL  
         cerr << "ERROR. Movimiento de apoyo en junta no restringida.\n";
         cerr << "Revise la junta : " << j << '\n';
         cout << "ERROR. Movimiento de apoyo en junta no restringida.\n";
         cout << "Revise la junta : " << j << '\n';
+#endif  
         exit(0);
       } // end if //
 
@@ -172,10 +190,18 @@ void ade1d() {
         cin >> jointRecord.jointDispl[k];
         cout << setw(11) << setprecision(7) <<jointRecord.jointDispl[k];
         if ( !constraint[jointRecNber][k]  and jointRecord.jointDispl[k] != 0.0) {
+#ifdef ENGLISH
+          cerr << "ERROR. Support displacement at unrestricted dof.\n";
+          cerr << "Please, chech node: " << j << '\n';
+          cout << "ERROR. Support displacement at unrestricted dof.\n";
+          cout << "Please, chech node: " << j << '\n';
+#endif  
+#ifdef ESPANOL  
           cerr << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
           cerr << "Revise la junta : " << j << '\n';
           cout << "ERROR. Movimiento de apoyo en coordenada no restringida.\n";
           cout << "Revise la junta : " << j << '\n';
+#endif  
           exit(0);
         } // end if //
       } // end for //
