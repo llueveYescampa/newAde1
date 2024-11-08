@@ -20,7 +20,7 @@ elseif ( CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM" )
     set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -fvectorize  -qopt-report-file=stderr -qopt-report=max  -xCORE-AVX2")
     #set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Wall -qopt-report=5 -qopt-report-phase=vec ")
 elseif ( CMAKE_CXX_COMPILER_ID STREQUAL "NVHPC" )
-    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd ")
+    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Minform=inform  -Minfo=all -Mvect=simd ")
     #set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -Minform=inform  -Mnodepchk -Minfo=all -Mvect=simd -tp=px ")
 endif ( )
 ## end of adding the following lines while cleaning the code
