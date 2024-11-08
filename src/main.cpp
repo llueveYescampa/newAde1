@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     } // endif //
   } // endif //
   path p = argv[1];
-    //    cin.clear();
 
     // assigning file names
   fileName = new string[4];
@@ -140,25 +139,32 @@ int main(int argc, char *argv[])
     ade1g();
   } // end if //
 
-    //freeVec(w);
-  freeMat(constraint,0,0);
-  freeVec(e);
-  freeVec(g);
-  freeVec(ct);
-  freeVec(pes);
-  
-  // removing auxiliary files
-  for (int i=0; i<4; ++i) {
-      remove(fileName[i]);  
-  } // end for //
-  // end of removing auxiliary files
-
   auto duration = std::chrono::steady_clock::now() - start;
   auto elapsed_time = std::chrono::duration_cast<ns>(duration).count();
 
   cout << fixed << setprecision(2)
        << "Time running " << elapsed_time*1.0e-9 
        <<  "  sec. \n";
+
+  // removing auxiliary files
+  for (int i=0; i<4; ++i) {
+      remove(fileName[i]);  
+  } // end for //
+  // end of removing auxiliary files
+
+  // releasing locally allocated memory
+  delete[] fileName;
+  freeVec(leftCol);
+  freeVec(loadVector);
+  delete[] titleCase;
+  freeMat(constraint,0,0);  
+  freeVec(pes);
+  freeVec(ct);
+  freeVec(g);
+  freeVec(e);
+  // end of releasing locally allocated memory
+       
+       
   file2std(cout,myStdOut);
   cout << "Bye...\n";
   return (0);
