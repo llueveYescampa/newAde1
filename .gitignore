@@ -1,0 +1,9 @@
+# build directories #
+###################
+build*/
+output/
+corre
+rename
+runCompare
+formula.pdf
+

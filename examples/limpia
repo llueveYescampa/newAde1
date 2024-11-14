@@ -1,0 +1,5 @@
+rm -rf *.jnt
+rm -rf *.elm
+rm -rf *.efs
+rm -rf *.rfs
+rm -rf *~

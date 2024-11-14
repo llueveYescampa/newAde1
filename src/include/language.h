@@ -1,0 +1,2 @@
+#define ENGLISH
+//#define ESPANOL

@@ -1,0 +1,5 @@
+#!/bin/bash
+./newAde0 $1 sal0.sal
+#sleep 1
+./newAde1 $1 sal1.sal
+diff sal0.sal sal1.sal
