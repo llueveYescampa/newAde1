@@ -193,7 +193,7 @@ void ade1e(const posInt  &m,
       vzisoj = 0.0;
 
 
-      // Calculo de las fuerzas primarias debido a cargas uniformes
+      // Calculo de las fuerzas primarias debido a cargas uniformes  // check results using https://calcresource.com/statics-fixed-beam.html
       for(auto ll = one; ll<= npu; ++ll) { // Solo se ejecuta si existen cargas uniformes
         auto k=zero;
         if (logico == false) {
@@ -216,7 +216,7 @@ void ade1e(const posInt  &m,
         if (b < 0.0) {
           b = -(b*elementRecord.length);
         } else if (b == 0.0){
-          b = elementRecord.length;
+          b = elementRecord.length - a;
         } // end if //
 
 
@@ -318,7 +318,7 @@ void ade1e(const posInt  &m,
         } // end for iv //
       } // end for //
 
-      // Calculo de las fuerzas primarias debido a cargas concentradas
+      // Calculo de las fuerzas primarias debido a cargas concentradas  // check results using https://calcresource.com/statics-fixed-beam.html
       for(auto ll = one; ll<= npc; ++ll) { // Solo se ejecuta si existen cargas concentradas
         auto k=zero;
         if (logico == false) {
@@ -395,7 +395,7 @@ void ade1e(const posInt  &m,
       } // end for //
 
 
-      // Calculo de las fuerzas primarias debido a cargas linealmente variables
+      // Calculo de las fuerzas primarias debido a cargas linealmente variables  // check results using https://calcresource.com/statics-fixed-beam.html
       for(auto ll = one; ll<= npv; ++ll) { // Solo se ejecuta si existen linealmente variables
         auto k=zero;
         if (logico == false) {
@@ -424,7 +424,7 @@ void ade1e(const posInt  &m,
         if (b < 0.0) {
           b = -(b*elementRecord.length);
         } else if (b == 0.0){
-          b = elementRecord.length;
+          b = elementRecord.length-a;
         } // end if //
 
 
