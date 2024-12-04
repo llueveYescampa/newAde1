@@ -403,7 +403,7 @@ void ade1a(const posInt  &n,
       elementRecord.stiffnessData[4] = 0;
       elementRecord.stiffnessData[5] = 0;
       elementRecord.stiffnessData[6] = 0;
-      elementRecord.ax = 0.0;
+      //elementRecord.ax = 0.0;
     } // end if //
 
     real a = e[elementRecord.materialType] / elementRecord.length;
