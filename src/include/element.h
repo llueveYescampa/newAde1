@@ -1,37 +1,37 @@
 #ifndef ELEMENT
-#define ELEMENT
+    #define ELEMENT
 
-#include "typedef.h"
-#include "dimen.h"
-#include <fstream>
-using std::fstream;
+    #include "typedef.h"
+    #include "dimen.h"
+    #include <fstream>
+    using std::fstream;
 
 
-// Variables of element header
+    // Variables of element header
 
-  #ifndef MAIN
-    extern Element elementRecord;
-    
-    extern fstream elementsBinaryFile;
-    extern posInt elementRecNber;
-    extern const posInt sizeOfElementRecord;
-    extern fstream elementsForcesBinaryFile;
-    extern posInt elementForcesRecNber;
-    extern posInt sizeOfElementForcesRecord;
-    extern posInt  secctionsInsideAnElement;
+    #ifndef MAIN
+        extern Element elementRecord;
 
-  #else
+        extern fstream elementsBinaryFile;
+        extern posInt elementRecNber;
+        extern const posInt sizeOfElementRecord;
+        extern fstream elementsForcesBinaryFile;
+        extern posInt elementForcesRecNber;
+        extern posInt sizeOfElementForcesRecord;
+        extern posInt  secctionsInsideAnElement;
 
-          Element elementRecord;
-          
-          fstream elementsBinaryFile;
-          posInt elementRecNber;
-          posInt sizeOfElementRecord  = sizeof(Element);
-          fstream elementsForcesBinaryFile;
-          posInt elementForcesRecNber;
-          posInt sizeOfElementForcesRecord; //depens on # of sec. inside an element
-          posInt  secctionsInsideAnElement=3;
+    #else
 
-  #endif
+        Element elementRecord;
+
+        fstream elementsBinaryFile;
+        posInt elementRecNber;
+        posInt sizeOfElementRecord  = sizeof(Element);
+        fstream elementsForcesBinaryFile;
+        posInt elementForcesRecNber;
+        posInt sizeOfElementForcesRecord; //depens on # of sec. inside an element
+        posInt  secctionsInsideAnElement=3;
+
+    #endif
 #endif
 // end of element.h

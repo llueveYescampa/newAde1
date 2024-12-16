@@ -1,8 +1,8 @@
 #include "element.h"
 
 void localElementStiffnessMatrix(      real **sm, 
-                                 const posInt  &elementDofs,
-                                 const Element &member)
+        const posInt  &elementDofs,
+        const Element &member)
 {
 
     real al=member.length;
@@ -24,10 +24,10 @@ void localElementStiffnessMatrix(      real **sm,
     real eiyl2, eiyl3, eizl2, eizl3;
 
     for(auto i=one; i<=elementDofs ; ++i) {
-       for(auto j=one; j<=i ; ++j) {
-          sm[i][j] = static_cast<real>(0.0);
+        for(auto j=one; j<=i ; ++j) {
+            sm[i][j] = static_cast<real>(0.0);
         } // end for //
-     } // end for //
+    } // end for //
 
     //el2 = el / al;
     //el3 = el2 / al;
@@ -76,9 +76,9 @@ void localElementStiffnessMatrix(      real **sm,
     sm[11][ 11] = eiyl * cjy;
 
     for(auto i=one; i<=elementDofs; ++i) {
-      for(auto j=i+1; j<=elementDofs; ++j) {
-        sm[i][j]= sm[j][i];
-      } // end for //
+        for(auto j=i+1; j<=elementDofs; ++j) {
+            sm[i][j]= sm[j][i];
+        } // end for //
     } // end for //
 
 } // end of localElementStiffnessMatrix //
