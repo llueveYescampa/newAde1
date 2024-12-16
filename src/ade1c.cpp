@@ -82,15 +82,6 @@ void ade1c(const posInt  &n,
         } // end if //
     } // end for //
 
-for (auto row=one; row<=nec; ++row) {
-    for (auto col=leftCol[row]; col<=row; ++col) {
-        cerr << s[row][col] << ' ';
-
-    }
-    cerr << '\n';
-}
-
-
     for(auto row=one; row<=nec; ++row) {
         if (s[row][row] == 0) {
             auto col = leftCol[row];
