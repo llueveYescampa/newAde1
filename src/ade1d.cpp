@@ -40,13 +40,22 @@ void ade1d(const posInt  &m,
 {
     //  Local Variables
     real **sm;
-    real *forcesInElement;
-    real *d;
+    real *forcesInElement=nullptr;
+    real *d=nullptr;
     //  End of local variables
 
 
     // opening files for processing data
-    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out|ios::binary);
+    if (icas > 0) {
+        elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out|ios::binary);
+    } else {
+        elementsForcesBinaryFile.open(fileName[2].c_str(),         ios::out|ios::binary);
+    } // end if //    
+    if (!elementsForcesBinaryFile) {
+        cerr << "File " << fileName[2] << " could not be opened.\n";
+        exit(1);
+    } // end if //
+/*    
     if (!elementsForcesBinaryFile) {
         elementsForcesBinaryFile.open(fileName[2].c_str(), ios::out|ios::binary);
         if (!elementsForcesBinaryFile) {
@@ -55,10 +64,11 @@ void ade1d(const posInt  &m,
         } // end if //
     } // end if //
 
-
+*/
     // defining the size of the record for file elementsForcesBinaryFile
     auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
-    dimVec(forcesInElement,0,totalNumberOfForces+1); // forcesInElement[0] takes the place of the old tlar flag
+    forcesInElement = new real [totalNumberOfForces+1](); // forcesInElement[0] takes the place of the old tlar flag
+    //dimVec(forcesInElement,0,totalNumberOfForces+1); // forcesInElement[0] takes the place of the old tlar flag
     sizeOfElementForcesRecord = (totalNumberOfForces+1)*sizeof(real);
     // end of defining the size of the record for file elementsForcesBinaryFile
 
@@ -70,11 +80,9 @@ void ade1d(const posInt  &m,
 
 
     ++icas;
-    if (icas > 1 ) {
-        for(auto i=one; i<=nec; ++i) {
-            loadVector[i] = 0.0;
-        } // end for //
-    } // end if //
+    for(auto i=one; i<=nec; ++i) {
+        loadVector[i] = static_cast<real>(0.0);
+    } // end for //
 
     header(cout,title, lin, npag);
     cin.ignore(1000,'\n');
@@ -262,7 +270,7 @@ void ade1d(const posInt  &m,
                 } else {
                     elementForcesRecNber=elementRecNber;
                 } // end if //
-                forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
+                forcesInElement[0] = static_cast<real>(true);  // Flag to indicate that there is primary forces in this member
                 for(auto k=one; k<=elementDofs; ++k) {
                     forcesInElement[k] = d[k];
                 } // end if //
@@ -283,14 +291,15 @@ void ade1d(const posInt  &m,
             } // end if //
             elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
             elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
-            forcesInElement[0] = 1.0;  // Flag to indicate that there is primary forces in this member
+            forcesInElement[0] = static_cast<real>(true);  // Flag to indicate that there is primary forces in this member
             forcesInElement[1]+=d[1];
             forcesInElement[7]-=d[1];
             elementsForcesBinaryFile.seekp(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
             elementsForcesBinaryFile.write(reinterpret_cast<const char *> (forcesInElement), sizeOfElementForcesRecord);
         } // end for //
     } // end if //
-    freeVec(forcesInElement,0);
+    delete[] forcesInElement;
+    //freeVec(forcesInElement,0);
     freeVec(d);
     freeMat(sm);
     elementsForcesBinaryFile.close();
