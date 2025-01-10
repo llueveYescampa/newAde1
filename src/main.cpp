@@ -173,7 +173,11 @@ int main(int argc, char *argv[])
     freeVec(leftCol);
     freeVec(loadVector);
     delete[] titleCase;
+    delete[] titleHip;
     freeMat(constraint,0,0);  
+    if (!reviewData) {
+      freeMat(s);  
+    } // end if //
     freeVec(pes);
     freeVec(ct);
     freeVec(g);
