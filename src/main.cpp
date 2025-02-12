@@ -88,11 +88,25 @@ int main(int argc, char *argv[])
         exit(1);
     } // end if //
 
+    // opening files for processing data
+
     elementsBinaryFile.open(fileName[1].c_str(),  ios::in | ios::out | ios::trunc | ios::binary);
     if (!elementsBinaryFile) {
         cerr << "File " <<    fileName[1] << " could not be opened.\n";
         exit(1);
     } // end if //
+    
+    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out| ios::trunc|ios::binary);
+    if (!elementsForcesBinaryFile) {
+        cerr << "File " << fileName[2] << " could not be opened.\n";
+        exit(1);
+    } // end if //
+
+    reactionsBinaryFile.open(fileName[3].c_str(),  ios::in | ios::out | ios::trunc | ios::binary);
+    if (!reactionsBinaryFile) {
+        cerr << "File " << fileName[3] << " could not be opened.\n";
+        exit(1);
+    } // end if //    
 
     // end of opening files for processing data
 
@@ -161,6 +175,13 @@ int main(int argc, char *argv[])
     cout << fixed << setprecision(2)
         << "Time running " << elapsed_time*1.0e-9 
         <<  "  sec. \n";
+
+    // closing files used for data processing
+    jointsBinaryFile.close();
+    reactionsBinaryFile.close();
+    elementsBinaryFile.close();    
+    elementsForcesBinaryFile.close();
+    // end of closing files used for data processing
 
     // removing auxiliary files
     for (int i=0; i<4; ++i) {

@@ -41,12 +41,6 @@ void ade1f(const posInt  &n,
     real *d;
     //  End of local variables
 
-    // opening files for processing data
-    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in | ios::out | ios::binary);
-    if (!elementsForcesBinaryFile) {
-        cerr << "File " << fileName[2] << " could not be opened.\n";
-        exit(1);
-    } // end if //
 
     // defining the size of the record for file elementsForcesBinaryFile
     const auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
@@ -260,15 +254,6 @@ void ade1f(const posInt  &n,
           // end of selecting global disp related to joints i and j in this element
     } // end for //
 
-    // opening files for processing data
-    reactionsBinaryFile.open(fileName[3].c_str(),  ios::in | ios::out | ios::binary);
-    if (!reactionsBinaryFile) {
-        reactionsBinaryFile.open(fileName[3].c_str(),  ios::out | ios::binary);
-        if (!reactionsBinaryFile) {
-            cerr << "File " << fileName[3] << " could not be opened.\n";
-            exit(1);
-        } // end if //
-    } // end if //
 
     real *jointReactionsRecord;
     jointReactionsRecord = new real [dofPerJoint];
@@ -317,7 +302,5 @@ void ade1f(const posInt  &n,
     freeVec(d);
     freeVec(forcesInElement,0);
 
-    elementsForcesBinaryFile.close();
-    reactionsBinaryFile.close();
     cerr << "End of Part ade1f \n";
 } // end of ade1f() //

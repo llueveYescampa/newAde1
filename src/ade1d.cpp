@@ -45,12 +45,6 @@ void ade1d(const posInt  &m,
     //  End of local variables
 
 
-    // opening files for processing data
-    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out| ios::trunc|ios::binary);
-    if (!elementsForcesBinaryFile) {
-        cerr << "File " << fileName[2] << " could not be opened.\n";
-        exit(1);
-    } // end if //
     
     // defining the size of the record for file elementsForcesBinaryFile
     auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
@@ -289,6 +283,5 @@ void ade1d(const posInt  &m,
     //freeVec(forcesInElement,0);
     freeVec(d);
     freeMat(sm);
-    elementsForcesBinaryFile.close();
     cerr << "End of Part ade1d \n";
 } // end of ade1d() //

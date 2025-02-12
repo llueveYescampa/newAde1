@@ -41,12 +41,6 @@ void ade1e(const posInt  &m,
     bool logico;
     //  End of local variables
 
-    // opening files for processing data
-    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in | ios::out | ios::binary);
-    if (!elementsForcesBinaryFile) {
-        cerr << "File " << fileName[2] << " could not be opened.\n";
-        exit(1);
-    } // end if //
 
 
     // defining the size of the record for file elementsForcesBinaryFile
@@ -825,7 +819,6 @@ void ade1e(const posInt  &m,
     freeMat(sm);
     freeVec(d);
     freeVec(forcesInElement,0);
-    elementsForcesBinaryFile.close();
 
     cerr << "End of Part ade1e \n";
     // ojo puede ir a ade1f o a aed1d //

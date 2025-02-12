@@ -48,12 +48,6 @@ void ade1g(
                                                      // end of defining the size of the record for file elementsForcesBinaryFile
 
 
-                                                     // opening files for processing data
-    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in  | ios::binary);
-    if (!elementsForcesBinaryFile) {
-        cerr << "File " << fileName[2] << " could not be opened.\n";
-        exit(1);
-    } // end if //
 
     dimMat(factor,nhip,ncas);
 
@@ -167,7 +161,6 @@ void ade1g(
     } // end for //
 
     freeVec(forcesInElement,0);
-    elementsForcesBinaryFile.close();
 
     header(cout,title,lin,npag);
 
@@ -244,12 +237,6 @@ void ade1g(
     header(cout,title,lin,npag);
     printJointInfo(6, lin);
 
-    // opening files for processing data
-    reactionsBinaryFile.open(fileName[3].c_str(), ios::in | ios::binary);
-    if (!reactionsBinaryFile) {
-        cerr << "File " << fileName[3] << " could not be opened.\n";
-        exit(1);
-    } // end if //
 
 
     jointReactionRecNber= 0;
@@ -291,6 +278,5 @@ void ade1g(
     delete [] jointReactionsRecord;
 
     freeMat(factor);
-    reactionsBinaryFile.close();
     cerr << "End of Part ade1g \n";
 } // end of ade1g() //
