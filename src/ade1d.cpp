@@ -46,25 +46,12 @@ void ade1d(const posInt  &m,
 
 
     // opening files for processing data
-    if (icas > 0) {
-        elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out|ios::binary);
-    } else {
-        elementsForcesBinaryFile.open(fileName[2].c_str(),         ios::out|ios::binary);
-    } // end if //    
+    elementsForcesBinaryFile.open(fileName[2].c_str(), ios::in|ios::out| ios::trunc|ios::binary);
     if (!elementsForcesBinaryFile) {
         cerr << "File " << fileName[2] << " could not be opened.\n";
         exit(1);
     } // end if //
-/*    
-    if (!elementsForcesBinaryFile) {
-        elementsForcesBinaryFile.open(fileName[2].c_str(), ios::out|ios::binary);
-        if (!elementsForcesBinaryFile) {
-            cerr << "File " << fileName[2] << " could not be opened.\n";
-            exit(1);
-        } // end if //
-    } // end if //
-
-*/
+    
     // defining the size of the record for file elementsForcesBinaryFile
     auto totalNumberOfForces = (secctionsInsideAnElement+2)*dofPerJoint;
     forcesInElement = new real [totalNumberOfForces+1](); // forcesInElement[0] takes the place of the old tlar flag
