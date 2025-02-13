@@ -742,40 +742,36 @@ void ade1e(const posInt  &m,
         } // end if //
     } // end if //
 
+    freeVec(d);
+    if (nmc > 0 or  nma > 0 or ato != 0.0) {
+        logico = false;
+        for(elementRecNber=0; elementRecNber < m; ++elementRecNber) {
+            if (nhip > 0) {
+                elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
+            } else {
+                elementForcesRecNber=elementRecNber;
+            } // end if //
+            elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
+            elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
 
-
-    logico = false;
-    for(elementRecNber=0; elementRecNber < m; ++elementRecNber) {
-        if (nhip > 0) {
-            elementForcesRecNber = (icas -1) + ncas * (elementRecNber);
-        } else {
-            elementForcesRecNber=elementRecNber;
-        } // end if //
-        elementsForcesBinaryFile.seekg(sizeOfElementForcesRecord*elementForcesRecNber,ios::beg);
-        elementsForcesBinaryFile.read(reinterpret_cast<char *> (forcesInElement), sizeOfElementForcesRecord);
-
-        if (forcesInElement[0] != 0) {
-            for(auto k=one; k<=elementDofs; ++k) {
-                d[k] = 0.0;
-            } // end for //
-
-            elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
-            elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
-            real *globalForces;
-            dimVec(globalForces,elementDofs);
-            mult4(elementRecord,elementDofs,forcesInElement,globalForces);
-            auto k=(elementRecord.ji-1)*dofPerJoint;
-            //cerr << k << '\n';
-            for(auto ii=one; ii<=dofPerJoint; ++ii) {
-                loadVector[++k] -= globalForces[ii];
-            } // end for //
-            k=(elementRecord.jj-1)*dofPerJoint;
-            //cerr << k << '\n';
-            for(auto ii=one; ii<=dofPerJoint; ++ii) {
-                loadVector[++k] -= globalForces[ii+dofPerJoint];
-            } // end for //
-            freeVec(globalForces);
-            if (nma + nmc + ato > 0) {
+            if (forcesInElement[0] != 0) {
+                elementsBinaryFile.seekg(sizeOfElementRecord*elementRecNber,ios::beg);
+                elementsBinaryFile.read(reinterpret_cast< char *> (&elementRecord), sizeOfElementRecord);
+                real *globalForces;
+                dimVec(globalForces,elementDofs);
+                mult4(elementRecord,elementDofs,forcesInElement,globalForces);
+                auto k=(elementRecord.ji-1)*dofPerJoint;
+                //cerr << k << '\n';
+                for(auto ii=one; ii<=dofPerJoint; ++ii) {
+                    loadVector[++k] -= globalForces[ii];
+                } // end for //
+                k=(elementRecord.jj-1)*dofPerJoint;
+                //cerr << k << '\n';
+                for(auto ii=one; ii<=dofPerJoint; ++ii) {
+                    loadVector[++k] -= globalForces[ii+dofPerJoint];
+                } // end for //
+                freeVec(globalForces);
+                
                 if (lin > 53) {
                     header(cout,title,lin,npag);
                     cout << titleCase[icas] << "\n\n";
@@ -788,36 +784,35 @@ void ade1e(const posInt  &m,
                     logico = true;
                 } // end if //
                 cout << setw(7) << elementRecNber+1
-                    << setw(7) << elementRecord.ji << setw(16) << setprecision(3)
-                    << setw(14) << -forcesInElement[1]
-                    << setw(13) <<  forcesInElement[2]
-                    << setw(13) <<  forcesInElement[3]
-                    << setw(13) << -forcesInElement[4]
-                    << setw(13) <<  forcesInElement[5]
-                    << setw(13) << -forcesInElement[6] << '\n';
+                     << setw(7) << elementRecord.ji << setw(16) << setprecision(3)
+                     << setw(14) << -forcesInElement[1]
+                     << setw(13) <<  forcesInElement[2]
+                     << setw(13) <<  forcesInElement[3]
+                     << setw(13) << -forcesInElement[4]
+                     << setw(13) <<  forcesInElement[5]
+                     << setw(13) << -forcesInElement[6] << '\n';
                 cout << setw(14) <<  elementRecord.jj << setw(16)
-                    << setw(14) <<  forcesInElement[7]
-                    << setw(13) << -forcesInElement[8]
-                    << setw(13) << -forcesInElement[9]
-                    << setw(13) <<  forcesInElement[10]
-                    << setw(13) << -forcesInElement[11]
-                    << setw(13) <<  forcesInElement[12] << '\n';
+                     << setw(14) <<  forcesInElement[7]
+                     << setw(13) << -forcesInElement[8]
+                     << setw(13) << -forcesInElement[9]
+                     << setw(13) <<  forcesInElement[10]
+                     << setw(13) << -forcesInElement[11]
+                     << setw(13) <<  forcesInElement[12] << '\n';
                 lin+=2;
+                if (lin > 55) {
+                    header(cout,title,lin,npag);
+                    cout << titleCase[icas] << "\n\n";
+                    lin+=2;
+                    printElementInfo(3,lin);
+                } // end if //
             } // end if //
-            if (lin > 55) {
-                header(cout,title,lin,npag);
-                cout << titleCase[icas] << "\n\n";
-                lin+=2;
-                printElementInfo(3,lin);
-            } // end if //
-        } // end if //
-    } // end for //
+        } // end for //
 
-    cout << '\n';
-    ++lin;
+        cout << '\n';
+        ++lin;
+    } // end if //
 
     freeMat(sm);
-    freeVec(d);
     freeVec(forcesInElement,0);
 
     cerr << "End of Part ade1e \n";
